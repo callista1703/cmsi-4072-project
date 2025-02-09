@@ -1,0 +1,40 @@
+CMSI 4072 Spring 2025
+Project Proposal Feedback
+Project: Educational Social App
+===============================
+Proposal Document [2 points]:
+   This was supposed to be an augmented version of your original proposal
+   document that states what you will be adding on this semester.  The only
+   thing that seems different with this second version is that you removed
+   the 'assignment' description part from the start of the document.  All of
+   the other text seems to be the same.
+
+   So what is NEW?  What are you adding to last semester?
+
+Proposal Presentation [3 points]:
+   Nice work on the presentation.  I like the minimalist approach you have
+   done using B&W as the theme.  The picture on the first page is nice, too.
+   You might have added just a couple more graphics to highlight some of the
+   parts of your project ~ pictures help a lot.
+
+   One thing to note for next time is, try not to put too much text together
+   on a single slide.  Bullets are usually better than paragraphs.  Your POV
+   and Justification pages are a bit dense in that regard.  Think about this
+   as showing just the 'highlights' of what you will say in your talk.
+
+   For example, on your POV page you could have a single student example, on
+   a side-by-side comparison, without the application and then with it, so
+   the audience can see how your application will be useful.
+
+   One other thing to note is, spread out a bit more across the 'stage' so
+   that the audience pays more attention to you, and SPEAK UP to hold their
+   focus.
+
+   Otherwise, good job!
+
+Summary:
+--------
+Total:  4% out of 5% for this deliverable.
+
+Not bad, overall, but make sure you are reading the specification for each
+assignment carefully so you know what is required.
