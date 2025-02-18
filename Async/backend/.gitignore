@@ -1,0 +1,44 @@
+# Compiled source code
+*.js        
+*.map       
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.lock
+*.swc      
+
+# Dependency management
+node_modules/
+.pnpm-store/  
+pnpm-lock.yaml 
+yarn.lock 
+
+# Environment variables
+.env
+
+# Testing
+test_results/
+coverage/
+
+# IDE and editor files
+.idea/
+.vscode/
+.settings/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Optional: If you use a build tool like esbuild or webpack
+dist/
+build/
+.cache/      
+
+# Optional: If you generate documentation
+docs/_build/
+
+# Optional: If you use serverless framework
+.serverless
