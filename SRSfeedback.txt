@@ -1,0 +1,44 @@
+
+New Individual Project
+Documentation Feedback ~ Deliverable #2
+Software Requirements Specification &
+Initial Development Schedule
+CMSI 4072 Spring 2025
+=======================================
+
+COMPONENT BREAKDOWN:
+   Not required for this semester's exercise
+
+FUNCTIONAL REQUIREMENTS:
+   This is a good start, but you need quite a few more requirements to fully
+   specify your application.  Either additional 'shall' statements or some
+   'will' statements to augment what you have are needed.  For example, in
+   5.3.1 you have:
+
+         The web application shall first display the login main page for
+         students and teachers.
+
+   ...but what about what is ON that page?  Is it different for students and
+   teachers?  What is different and what will they each see?  How will the
+   user tell the program that they are finished entering data ~ press 'enter'
+   or click a button?  Or will both be available?  You see the idea here...
+
+PERFORMANCE REQUIREMENTS:
+   These are excellent!  Good job on this section, nothing else needed.
+
+ENVIRONMENT REQUIREMENTS:
+   These are find, too.  Good job on this section, nothing else needed.
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   Component Breakdown                 2/2
+   Functional Requirements           4.5/5
+   Performance Requirements            2/2
+   Environment Requirements            1/1
+                                     =====
+   Subtotal                         9.5/10
+   ------------------------------------------------------
+   Total Percentage:  9.5/10 = 95% which is an A
+
+Very good start on this, just add some more requirements if you want, to get
+that other 1/2 point.
