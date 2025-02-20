@@ -13,6 +13,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Link } from "@tanstack/react-router";
 
 export function Sidebar() {
 	return (
@@ -24,32 +25,45 @@ export function Sidebar() {
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton className="ml-3">
-							<Home className="mr-3 h-5 w-5" />
-							<span>Dashboard</span>
+							<Link
+								to="/dashboard"
+								className="cursor-pointer flex items-center"
+							>
+								<Home className="mr-6 h-4 w-4" />
+								<span>Dashboard</span>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
 						<SidebarMenuButton className="ml-3">
-							<BookOpen className="mr-3 h-5 w-5" />
-							<span>Courses</span>
+							<Link to="/courses" className="cursor-pointer flex items-center">
+								<BookOpen className="mr-6 h-4 w-4" />
+								<span>Courses</span>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
 						<SidebarMenuButton className="ml-3">
-							<Calendar className="mr-3 h-5 w-5" />
-							<span>Calendar</span>
+							<Link to="/calendar" className="cursor-pointer flex items-center">
+								<Calendar className="mr-6 h-4 w-4" />
+								<span>Calendar</span>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
 						<SidebarMenuButton className="ml-3">
-							<MessageSquare className="mr-3 h-5 w-5" />
-							<span>Messages</span>
+							<Link to="/messages" className="cursor-pointer flex items-center">
+								<MessageSquare className="mr-6 h-4 w-4" />
+								<span>Messages</span>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
 						<SidebarMenuButton className="ml-3">
-							<Settings className="mr-3 h-5 w-5" />
-							<span>Settings</span>
+							<Link to="/settings" className="cursor-pointer flex items-center">
+								<Settings className="mr-6 h-4 w-4" />
+								<span>Settings</span>
+							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>
