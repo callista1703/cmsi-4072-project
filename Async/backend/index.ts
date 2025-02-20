@@ -1,30 +1,61 @@
-import fastify from "fastify";
+import fastify, {
+	FastifyInstance,
+	FastifyRequest,
+	FastifyReply,
+} from "fastify";
 
-interface IQuerystring {
+interface IQueryInterface {
 	username: string;
 	password: string;
 }
 
 interface IHeaders {
-	"h-Custom": string;
+	"x-access-token": string;
 }
 
 interface IReply {
-	200: { success: boolean };
-	302: { url: string };
-	"4xx": { error: string };
+	code: number;
+	message: string;
+	body: any;
 }
 
-const server = fastify();
+const app: FastifyInstance = fastify({ logger: true });
 
-server.get("/ping", async (request, reply) => {
-	return "pong\n";
-});
+async function userRoutes(app: FastifyInstance) {
+	app.get("/user", async (request, reply) => {
+		return { hello: "world" };
+	});
 
-server.listen({ port: 8080 }, (err, address) => {
+	app.get("/", async (request, reply) => {
+		return { hello: "ian" };
+	});
+}
+
+app.get<{ Querystring: IQueryInterface; Headers: IHeaders; Reply: IReply }>(
+	"/ping",
+	async (request, reply) => {
+		const { username, password } = request.query;
+		return reply.send({
+			code: 200,
+			message: "success",
+			body: { username, password },
+		});
+	}
+);
+
+app.register(userRoutes, { prefix: "/api" });
+
+app.listen({ port: 8080 }, (err, address) => {
 	if (err) {
 		console.error(err);
 		process.exit(1);
 	}
-	console.log(`Server listening at ${address}`);
+	console.log(`app listening at ${address}`);
+});
+
+["SIGINT", "SIGTERM"].forEach((signal) => {
+	process.on(signal, async () => {
+		await app.close();
+		process.exit(0);
+	});
 });
