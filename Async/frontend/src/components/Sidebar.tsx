@@ -4,6 +4,7 @@ import {
 	Calendar,
 	MessageSquare,
 	Settings,
+	Circle,
 } from "lucide-react";
 import {
 	Sidebar as ShadcnSidebar,
@@ -22,11 +23,11 @@ export function Sidebar() {
 				<h2 className="text-2xl font-bold text-left">Async</h2>
 			</SidebarHeader>
 			<SidebarContent className="bg-white">
-				<SidebarMenu>
+				<SidebarMenu className="h-full">
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/" className="cursor-pointer">
-								<Home className="mr-6 h-4 w-4" />
+								<Home className="mr-4 h-4 w-4" />
 								<span>Home</span>
 							</Link>
 						</SidebarMenuButton>
@@ -34,7 +35,7 @@ export function Sidebar() {
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/courses" className="cursor-pointer">
-								<BookOpen className="mr-6 h-4 w-4" />
+								<BookOpen className="mr-4 h-4 w-4" />
 								<span>Courses</span>
 							</Link>
 						</SidebarMenuButton>
@@ -42,7 +43,7 @@ export function Sidebar() {
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/calendar" className="cursor-pointer ">
-								<Calendar className="mr-6 h-4 w-4" />
+								<Calendar className="mr-4 h-4 w-4" />
 								<span>Calendar</span>
 							</Link>
 						</SidebarMenuButton>
@@ -50,7 +51,7 @@ export function Sidebar() {
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/messages" className="cursor-pointer">
-								<MessageSquare className="mr-6 h-4 w-4" />
+								<MessageSquare className="mr-4 h-4 w-4" />
 								<span>Messages</span>
 							</Link>
 						</SidebarMenuButton>
@@ -58,11 +59,15 @@ export function Sidebar() {
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/settings" className="cursor-pointer">
-								<Settings className="mr-6 h-4 w-4" />
+								<Settings className="mr-4 h-4 w-4" />
 								<span>Settings</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
+					<div className="flex items-center gap-2 mt-auto pb-6 ml-3">
+						<Circle size={45} fill="grey" />
+						<h3 className="text-sm">@username</h3>
+					</div>
 				</SidebarMenu>
 			</SidebarContent>
 		</ShadcnSidebar>
