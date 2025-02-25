@@ -17,50 +17,47 @@ import { Link } from "@tanstack/react-router";
 
 export function Sidebar() {
 	return (
-		<ShadcnSidebar className="w-52 border-r">
-			<SidebarHeader className="p-6">
+		<ShadcnSidebar className="w-52 border-r bg-white h-full">
+			<SidebarHeader className="p-6 bg-white">
 				<h2 className="text-2xl font-bold text-left">Async</h2>
 			</SidebarHeader>
-			<SidebarContent>
+			<SidebarContent className="bg-white">
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton className="ml-3">
-							<Link
-								to="/dashboard"
-								className="cursor-pointer flex items-center"
-							>
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/" className="cursor-pointer">
 								<Home className="mr-6 h-4 w-4" />
-								<span>Dashboard</span>
+								<span>Home</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
-						<SidebarMenuButton className="ml-3">
-							<Link to="/courses" className="cursor-pointer flex items-center">
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/courses" className="cursor-pointer">
 								<BookOpen className="mr-6 h-4 w-4" />
 								<span>Courses</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
-						<SidebarMenuButton className="ml-3">
-							<Link to="/calendar" className="cursor-pointer flex items-center">
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/calendar" className="cursor-pointer ">
 								<Calendar className="mr-6 h-4 w-4" />
 								<span>Calendar</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
-						<SidebarMenuButton className="ml-3">
-							<Link to="/messages" className="cursor-pointer flex items-center">
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/messages" className="cursor-pointer">
 								<MessageSquare className="mr-6 h-4 w-4" />
 								<span>Messages</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem>
-						<SidebarMenuButton className="ml-3">
-							<Link to="/settings" className="cursor-pointer flex items-center">
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/settings" className="cursor-pointer">
 								<Settings className="mr-6 h-4 w-4" />
 								<span>Settings</span>
 							</Link>

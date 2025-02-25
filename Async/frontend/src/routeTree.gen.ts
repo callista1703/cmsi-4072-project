@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsImport } from './routes/settings'
 import { Route as MessagesImport } from './routes/messages'
-import { Route as DashboardImport } from './routes/dashboard'
 import { Route as CoursesImport } from './routes/courses'
 import { Route as CalendarImport } from './routes/calendar'
 import { Route as AboutImport } from './routes/about'
@@ -30,12 +29,6 @@ const SettingsRoute = SettingsImport.update({
 const MessagesRoute = MessagesImport.update({
   id: '/messages',
   path: '/messages',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -95,13 +88,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
     '/messages': {
       id: '/messages'
       path: '/messages'
@@ -126,7 +112,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
-  '/dashboard': typeof DashboardRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
 }
@@ -136,7 +121,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
-  '/dashboard': typeof DashboardRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
 }
@@ -147,7 +131,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
-  '/dashboard': typeof DashboardRoute
   '/messages': typeof MessagesRoute
   '/settings': typeof SettingsRoute
 }
@@ -159,25 +142,16 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/courses'
-    | '/dashboard'
     | '/messages'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/calendar'
-    | '/courses'
-    | '/dashboard'
-    | '/messages'
-    | '/settings'
+  to: '/' | '/about' | '/calendar' | '/courses' | '/messages' | '/settings'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/calendar'
     | '/courses'
-    | '/dashboard'
     | '/messages'
     | '/settings'
   fileRoutesById: FileRoutesById
@@ -188,7 +162,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CalendarRoute: typeof CalendarRoute
   CoursesRoute: typeof CoursesRoute
-  DashboardRoute: typeof DashboardRoute
   MessagesRoute: typeof MessagesRoute
   SettingsRoute: typeof SettingsRoute
 }
@@ -198,7 +171,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CalendarRoute: CalendarRoute,
   CoursesRoute: CoursesRoute,
-  DashboardRoute: DashboardRoute,
   MessagesRoute: MessagesRoute,
   SettingsRoute: SettingsRoute,
 }
@@ -217,7 +189,6 @@ export const routeTree = rootRoute
         "/about",
         "/calendar",
         "/courses",
-        "/dashboard",
         "/messages",
         "/settings"
       ]
@@ -233,9 +204,6 @@ export const routeTree = rootRoute
     },
     "/courses": {
       "filePath": "courses.tsx"
-    },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
     },
     "/messages": {
       "filePath": "messages.tsx"
