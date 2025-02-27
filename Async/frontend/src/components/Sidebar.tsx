@@ -64,6 +64,14 @@ export function Sidebar() {
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
+					<SidebarMenuItem>
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/login" className="cursor-pointer">
+								<Settings className="mr-4 h-4 w-4" />
+								<span>Temp Login Link</span>
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
 					<div className="flex items-center gap-2 mt-auto pb-6 ml-3">
 						<Circle size={45} fill="grey" />
 						<h3 className="text-sm">@username</h3>

@@ -12,7 +12,9 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsImport } from './routes/settings'
+import { Route as RegisterImport } from './routes/register'
 import { Route as MessagesImport } from './routes/messages'
+import { Route as LoginImport } from './routes/login'
 import { Route as CoursesImport } from './routes/courses'
 import { Route as CalendarImport } from './routes/calendar'
 import { Route as AboutImport } from './routes/about'
@@ -26,9 +28,21 @@ const SettingsRoute = SettingsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const MessagesRoute = MessagesImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -88,11 +102,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
     '/messages': {
       id: '/messages'
       path: '/messages'
       fullPath: '/messages'
       preLoaderRoute: typeof MessagesImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
     '/settings': {
@@ -112,7 +140,9 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
 }
 
@@ -121,7 +151,9 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
 }
 
@@ -131,7 +163,9 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
+  '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
+  '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
 }
 
@@ -142,17 +176,29 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/courses'
+    | '/login'
     | '/messages'
+    | '/register'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/calendar' | '/courses' | '/messages' | '/settings'
+  to:
+    | '/'
+    | '/about'
+    | '/calendar'
+    | '/courses'
+    | '/login'
+    | '/messages'
+    | '/register'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/calendar'
     | '/courses'
+    | '/login'
     | '/messages'
+    | '/register'
     | '/settings'
   fileRoutesById: FileRoutesById
 }
@@ -162,7 +208,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CalendarRoute: typeof CalendarRoute
   CoursesRoute: typeof CoursesRoute
+  LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
+  RegisterRoute: typeof RegisterRoute
   SettingsRoute: typeof SettingsRoute
 }
 
@@ -171,7 +219,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CalendarRoute: CalendarRoute,
   CoursesRoute: CoursesRoute,
+  LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
+  RegisterRoute: RegisterRoute,
   SettingsRoute: SettingsRoute,
 }
 
@@ -189,7 +239,9 @@ export const routeTree = rootRoute
         "/about",
         "/calendar",
         "/courses",
+        "/login",
         "/messages",
+        "/register",
         "/settings"
       ]
     },
@@ -205,8 +257,14 @@ export const routeTree = rootRoute
     "/courses": {
       "filePath": "courses.tsx"
     },
+    "/login": {
+      "filePath": "login.tsx"
+    },
     "/messages": {
       "filePath": "messages.tsx"
+    },
+    "/register": {
+      "filePath": "register.tsx"
     },
     "/settings": {
       "filePath": "settings.tsx"
