@@ -9,15 +9,36 @@ import {
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
 import { z } from "zod";
-
-const registerFormSchema = z.object({
-	firstName: z.string().nonempty(),
-	lastName: z.string().nonempty(),
-	email: z.string().email("invalid email format."),
-	password: z.string().min(8, "password must be at least 8 characters."),
-});
+import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function RegisterCard() {
+	const { session, signUpNewUser } = useAuth();
+	const navigate = useNavigate({ from: "/register" });
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+
+	const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setLoading(true);
+
+		try {
+			const result = await signUpNewUser(email, password);
+			if (result.success) {
+				navigate({ to: "/calendar" });
+			}
+		} catch (error) {
+			setError("an error occurred");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
 		<>
 			<Card className="w-md">
@@ -25,13 +46,14 @@ export default function RegisterCard() {
 					<CardTitle className="text-2xl">Create Account</CardTitle>
 					<CardDescription>Start learning with Async today!</CardDescription>
 				</CardHeader>
-				<CardContent>
-					<form className="space-y-4">
-						<div className="flex flex-col gap-1">
+				<form className="space-y-4" onSubmit={handleSignUp}>
+					<CardContent>
+						{/* <div className="flex flex-col gap-1">
 							<label htmlFor="firstName">First Name</label>
 							<input
 								type="firstName"
 								className=" border rounded-sm border-stone-200 p-2"
+								onChange={(e) => setFirstName(e.target.value)}
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
@@ -39,35 +61,48 @@ export default function RegisterCard() {
 							<input
 								type="lastName"
 								className=" border rounded-sm border-stone-200 p-2"
+								onChange={(e) => setLastName(e.target.value)}
 							/>
-						</div>
+						</div> */}
 						<div className="flex flex-col gap-1">
 							<label htmlFor="email">Email</label>
 							<input
 								type="email"
 								className=" border rounded-sm border-stone-200 p-2"
+								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
-					</form>
-				</CardContent>
-				<CardFooter className="flex flex-col gap-6">
-					<div className="w-full flex justify-center">
-						<Button variant="default" className="cursor-pointer">
-							Next
+						<div className="flex flex-col gap-1">
+							<label htmlFor="password">Password</label>
+							<input
+								type="password"
+								className=" border rounded-sm border-stone-200 p-2"
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+						</div>
+					</CardContent>
+					<CardFooter className="flex flex-col gap-6">
+						<Button
+							variant="default"
+							type="submit"
+							className="cursor-pointer w-full"
+						>
+							Submit
 						</Button>
-					</div>
-					<div className="flex items-center w-full">
-						<hr className="flex-grow border-t border-gray-300" />
-						<span className="mx-4 text-gray-500 text-xs">or</span>
-						<hr className="flex-grow border-t border-gray-300" />
-					</div>
-					<div>
-						<Button variant="outline" className="cursor-pointer">
-							<Globe />
-							Register with Google
-						</Button>
-					</div>
-				</CardFooter>
+						<div className="flex items-center w-full">
+							<hr className="flex-grow border-t border-gray-300" />
+							<span className="mx-4 text-gray-500 text-xs">or</span>
+							<hr className="flex-grow border-t border-gray-300" />
+						</div>
+						<div>
+							<Button variant="outline" className="cursor-pointer">
+								<Globe />
+								Register with Google
+							</Button>
+						</div>
+						{error && <p className="text-red-500 pt-4 text-center">{error}</p>}
+					</CardFooter>
+				</form>
 			</Card>
 		</>
 	);

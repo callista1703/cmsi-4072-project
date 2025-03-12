@@ -8,12 +8,19 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginCard() {
-	const navigate = useNavigate();
-	const handleNavigateRegister = () => navigate({ to: "/register" });
-
+	const { signOutUser } = useAuth();
+	const handleSignOut = async () => {
+		try {
+			await signOutUser();
+			console.log("signed out successfully");
+		} catch (error) {
+			console.error("an error occurred while signing out", error);
+		}
+	};
 	return (
 		<>
 			<Card className="w-md">
@@ -44,9 +51,17 @@ export default function LoginCard() {
 						<Button
 							variant="ghost"
 							className="-ml-2 px-2 cursor-pointer text-sm"
-							onClick={handleNavigateRegister}
+							asChild
 						>
-							Create Account
+							<Link to="/register">Create Account</Link>
+						</Button>
+
+						<Button
+							variant="default"
+							className="cursor-pointer"
+							onClick={handleSignOut}
+						>
+							Sign-Out
 						</Button>
 						<Button variant="default" className="cursor-pointer">
 							Submit

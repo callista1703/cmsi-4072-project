@@ -15,6 +15,7 @@ import { Route as SettingsImport } from './routes/settings'
 import { Route as RegisterImport } from './routes/register'
 import { Route as MessagesImport } from './routes/messages'
 import { Route as LoginImport } from './routes/login'
+import { Route as HomeImport } from './routes/home'
 import { Route as CoursesImport } from './routes/courses'
 import { Route as CalendarImport } from './routes/calendar'
 import { Route as AboutImport } from './routes/about'
@@ -43,6 +44,12 @@ const MessagesRoute = MessagesImport.update({
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const HomeRoute = HomeImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -102,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesImport
       parentRoute: typeof rootRoute
     }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -140,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
+  '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/register': typeof RegisterRoute
@@ -151,6 +166,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
+  '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/register': typeof RegisterRoute
@@ -163,6 +179,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
+  '/home': typeof HomeRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/register': typeof RegisterRoute
@@ -176,6 +193,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/courses'
+    | '/home'
     | '/login'
     | '/messages'
     | '/register'
@@ -186,6 +204,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/courses'
+    | '/home'
     | '/login'
     | '/messages'
     | '/register'
@@ -196,6 +215,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/calendar'
     | '/courses'
+    | '/home'
     | '/login'
     | '/messages'
     | '/register'
@@ -208,6 +228,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CalendarRoute: typeof CalendarRoute
   CoursesRoute: typeof CoursesRoute
+  HomeRoute: typeof HomeRoute
   LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
   RegisterRoute: typeof RegisterRoute
@@ -219,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CalendarRoute: CalendarRoute,
   CoursesRoute: CoursesRoute,
+  HomeRoute: HomeRoute,
   LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
   RegisterRoute: RegisterRoute,
@@ -239,6 +261,7 @@ export const routeTree = rootRoute
         "/about",
         "/calendar",
         "/courses",
+        "/home",
         "/login",
         "/messages",
         "/register",
@@ -256,6 +279,9 @@ export const routeTree = rootRoute
     },
     "/courses": {
       "filePath": "courses.tsx"
+    },
+    "/home": {
+      "filePath": "home.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
