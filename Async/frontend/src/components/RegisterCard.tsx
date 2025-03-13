@@ -15,13 +15,14 @@ import { useNavigate } from "@tanstack/react-router";
 
 export default function RegisterCard() {
 	const { session, signUpNewUser } = useAuth();
-	const navigate = useNavigate({ from: "/register" });
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+
+	const navigate = useNavigate({ from: "/register" });
 
 	const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

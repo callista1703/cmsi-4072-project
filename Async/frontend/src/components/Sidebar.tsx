@@ -14,9 +14,24 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter, useNavigate } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 export function Sidebar() {
+	const { signOutUser } = useAuth();
+	const router = useRouter();
+
+	const handleSignOut = async () => {
+		try {
+			await signOutUser();
+			router.navigate({ to: "/login" });
+			console.log("signed out successfully");
+		} catch (error) {
+			console.error("an error occurred while signing out", error);
+		}
+	};
+
 	return (
 		<ShadcnSidebar className="w-52 border-r bg-white h-full">
 			<SidebarHeader className="p-6 bg-white">
@@ -74,7 +89,13 @@ export function Sidebar() {
 					</SidebarMenuItem>
 					<div className="flex items-center gap-2 mt-auto pb-6 ml-3">
 						<Circle size={45} fill="grey" />
-						<h3 className="text-sm">@username</h3>
+						<Button
+							variant="default"
+							className="cursor-pointer"
+							onClick={handleSignOut}
+						>
+							Sign-Out
+						</Button>
 					</div>
 				</SidebarMenu>
 			</SidebarContent>

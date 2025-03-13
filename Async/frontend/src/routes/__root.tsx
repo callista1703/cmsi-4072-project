@@ -8,24 +8,9 @@ import { Sidebar } from "@/components/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { QueryClient } from "@tanstack/react-query";
 import { AuthState } from "@/context/AuthContext";
-
-// export const Route = createRootRoute({
-// 	component: () => (
-// 		<>
-// 			<div className="w-screen h-screen flex bg-white overflow-y-auto">
-// 				<SidebarProvider>
-// 					<Sidebar />
-
-// 					<Outlet />
-// 				</SidebarProvider>
-// 				<TanStackRouterDevtools position="top-right" />
-// 			</div>
-// 		</>
-// 	),
-// });
 interface MyRouterContext {
-	auth: AuthState;
 	queryClient: QueryClient;
+	auth: AuthState | null;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({

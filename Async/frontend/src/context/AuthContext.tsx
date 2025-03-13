@@ -16,6 +16,10 @@ export interface AuthState {
 		password: string
 	) => Promise<{ success: boolean; data?: object; error?: Error }>;
 	signOutUser: () => Promise<void>;
+	signInUser: (
+		email: string,
+		password: string
+	) => Promise<{ success: boolean; data?: object; error?: Error }>;
 }
 
 interface AuthProviderProps {
@@ -26,7 +30,8 @@ const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [session, setSession] = useState<Session | null>(null);
-	console.log(session);
+	console.log(session?.user.aud);
+	console.log(session?.user.email);
 
 	const signUpNewUser = async (email: string, password: string) => {
 		const { data, error } = await supabase.auth.signUp({
@@ -39,6 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 			return { success: false, error };
 		}
 
+		setSession(data.session);
 		return { success: true, data };
 	};
 
@@ -50,6 +56,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		if (error) {
 			console.error("error signing out", error);
 		}
+
+		setSession(null);
+	};
+
+	const signInUser = async (email: string, password: string) => {
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email: email,
+			password: password,
+		});
+
+		if (error) {
+			console.error("there was an error signing in:", error.message);
+			return { success: false, error };
+		}
+
+		setSession(data.session);
+		return { success: true, data };
 	};
 
 	useEffect(() => {
@@ -57,13 +80,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 			setSession(session);
 		});
 
-		supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session);
-		});
+		const { data: authListener } = supabase.auth.onAuthStateChange(
+			(_event, session) => {
+				setSession(session);
+			}
+		);
+
+		return () => {
+			authListener.subscription.unsubscribe();
+		};
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ session, signUpNewUser, signOutUser }}>
+		<AuthContext.Provider
+			value={{ session, signUpNewUser, signOutUser, signInUser }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

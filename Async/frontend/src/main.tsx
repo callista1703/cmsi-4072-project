@@ -10,21 +10,12 @@ import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
 
-export type MyRouterContext = {
-	queryClient: QueryClient;
-};
-
 // Create a new router instance
 const router = createRouter({
 	routeTree,
 	context: {
 		queryClient: queryClient,
-		auth: {
-			session: null,
-			signUpNewUser: async () => ({ success: false }),
-			signOutUser: async () => {},
-			// setSession,
-		},
+		auth: null,
 	},
 	defaultPreload: "intent",
 });
