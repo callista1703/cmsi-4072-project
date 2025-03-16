@@ -38,15 +38,23 @@ export function Sidebar() {
 				<h2 className="text-2xl font-bold text-left">Async</h2>
 			</SidebarHeader>
 			<SidebarContent className="bg-white">
-				<SidebarMenu className="h-full">
+				<SidebarMenu className="h-full ">
 					<SidebarMenuItem>
+						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
+							<Link to="/dashboard" className="cursor-pointer">
+								<Home className="mr-4 h-4 w-4" />
+								<span>Dashboard</span>
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+					{/* <SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/" className="cursor-pointer">
 								<Home className="mr-4 h-4 w-4" />
 								<span>Home</span>
 							</Link>
 						</SidebarMenuButton>
-					</SidebarMenuItem>
+					</SidebarMenuItem> */}
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/courses" className="cursor-pointer">
@@ -79,14 +87,14 @@ export function Sidebar() {
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
-					<SidebarMenuItem>
+					{/* <SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/login" className="cursor-pointer">
 								<Settings className="mr-4 h-4 w-4" />
 								<span>Temp Login Link</span>
 							</Link>
 						</SidebarMenuButton>
-					</SidebarMenuItem>
+					</SidebarMenuItem> */}
 					<div className="flex items-center gap-2 mt-auto pb-6 ml-3">
 						<Circle size={45} fill="grey" />
 						<Button

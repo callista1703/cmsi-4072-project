@@ -1,21 +1,25 @@
-import { StrictMode } from "react";
+import { StrictMode, useEffect } from "react";
 import "./index.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { AuthProvider, useAuth } from "@/context/AuthContext";
-
-// Import the generated route tree
+import { AuthProvider, AuthState, useAuth } from "@/context/AuthContext";
 import { routeTree } from "./routeTree.gen";
+import { MyRouterContext } from "./routes/__root";
 
 const queryClient = new QueryClient();
 
-// Create a new router instance
 const router = createRouter({
 	routeTree,
 	context: {
 		queryClient: queryClient,
-		auth: null,
+		auth: {
+			session: null,
+			signUpNewUser: async () => ({ success: false, error: new Error() }),
+			signOutUser: async () => {},
+			signInUser: async () => ({ success: false, error: new Error() }),
+			loading: true,
+		},
 	},
 	defaultPreload: "intent",
 });
@@ -29,6 +33,29 @@ declare module "@tanstack/react-router" {
 
 function InnerApp() {
 	const auth = useAuth();
+
+	useEffect(() => {
+		// Always update the router context when auth changes, not just when not loading
+		const newContext: MyRouterContext = {
+			queryClient: queryClient,
+			auth: auth,
+		};
+
+		// Update the router with the new context
+		router.update({
+			context: newContext,
+		});
+	}, [auth]);
+
+	// Don't render the app until authentication is loaded
+	if (auth.loading) {
+		return (
+			<div className="w-screen h-screen flex items-center justify-center">
+				Loading...
+			</div>
+		);
+	}
+
 	return <RouterProvider router={router} context={{ auth, queryClient }} />;
 }
 

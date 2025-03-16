@@ -10,7 +10,6 @@ import { supabase } from "../supabaseClient.ts";
 
 export interface AuthState {
 	session: Session | null;
-	// setSession: (session: Session | null) => void;
 	signUpNewUser: (
 		email: string,
 		password: string
@@ -20,6 +19,7 @@ export interface AuthState {
 		email: string,
 		password: string
 	) => Promise<{ success: boolean; data?: object; error?: Error }>;
+	loading: boolean;
 }
 
 interface AuthProviderProps {
@@ -30,8 +30,31 @@ const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [session, setSession] = useState<Session | null>(null);
+	const [loading, setLoading] = useState(true);
+	console.log(session?.user.aud);
 	console.log(session?.user.aud);
 	console.log(session?.user.email);
+
+	useEffect(() => {
+		const getInitialSession = async () => {
+			setLoading(true);
+			const {
+				data: { session },
+			} = await supabase.auth.getSession();
+			setSession(session);
+			setLoading(false);
+		};
+
+		getInitialSession();
+
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((_event, session) => {
+			setSession(session);
+		});
+
+		return () => subscription.unsubscribe();
+	}, []);
 
 	const signUpNewUser = async (email: string, password: string) => {
 		const { data, error } = await supabase.auth.signUp({
@@ -62,8 +85,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	const signInUser = async (email: string, password: string) => {
 		const { data, error } = await supabase.auth.signInWithPassword({
-			email: email,
-			password: password,
+			email,
+			password,
 		});
 
 		if (error) {
@@ -75,25 +98,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		return { success: true, data };
 	};
 
-	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			setSession(session);
-		});
-
-		const { data: authListener } = supabase.auth.onAuthStateChange(
-			(_event, session) => {
-				setSession(session);
-			}
-		);
-
-		return () => {
-			authListener.subscription.unsubscribe();
-		};
-	}, []);
-
 	return (
 		<AuthContext.Provider
-			value={{ session, signUpNewUser, signOutUser, signInUser }}
+			value={{ session, signUpNewUser, signOutUser, signInUser, loading }}
 		>
 			{children}
 		</AuthContext.Provider>

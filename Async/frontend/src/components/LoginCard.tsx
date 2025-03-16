@@ -8,17 +8,33 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import {
+	getRouteApi,
+	Link,
+	useNavigate,
+	useRouter,
+	useSearch,
+} from "@tanstack/react-router";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+
+const route = getRouteApi("/login");
+
+type SearchParams = {
+	redirect: string;
+};
 
 export default function LoginCard() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-	const { signOutUser, signInUser } = useAuth();
-	const navigate = useNavigate({ from: "/register" });
+	const { signInUser } = useAuth();
+	const navigate = useNavigate();
+	const router = useRouter();
+	const search: SearchParams = route.useSearch();
+	console.log("search", search);
 
+	// const redirectPath = search.redirect || "/dashboard";
 	const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
@@ -27,7 +43,9 @@ export default function LoginCard() {
 		try {
 			const result = await signInUser(email, password);
 			if (result.success) {
-				navigate({ to: "/calendar" });
+				// console.log("redirect to", redirectPath);
+				const redirectTo = search.redirect || "/dashboard";
+				router.history.push(redirectTo);
 			}
 		} catch (error) {
 			console.error("an error occurred while signing in", error);
@@ -77,7 +95,7 @@ export default function LoginCard() {
 								type="submit"
 								className="cursor-pointer"
 							>
-								Submit
+								Log in
 							</Button>
 						</div>
 						<div className="flex items-center w-full">
