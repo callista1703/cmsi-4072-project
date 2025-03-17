@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsImport } from './routes/settings'
 import { Route as RegisterImport } from './routes/register'
-import { Route as MessagesImport } from './routes/messages'
 import { Route as LoginImport } from './routes/login'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as CoursesImport } from './routes/courses'
@@ -32,12 +31,6 @@ const SettingsRoute = SettingsImport.update({
 const RegisterRoute = RegisterImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const MessagesRoute = MessagesImport.update({
-  id: '/messages',
-  path: '/messages',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -123,13 +116,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/messages': {
-      id: '/messages'
-      path: '/messages'
-      fullPath: '/messages'
-      preLoaderRoute: typeof MessagesImport
-      parentRoute: typeof rootRoute
-    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -156,7 +142,6 @@ export interface FileRoutesByFullPath {
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/messages': typeof MessagesRoute
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
 }
@@ -168,7 +153,6 @@ export interface FileRoutesByTo {
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/messages': typeof MessagesRoute
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
 }
@@ -181,7 +165,6 @@ export interface FileRoutesById {
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/messages': typeof MessagesRoute
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
 }
@@ -195,7 +178,6 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/login'
-    | '/messages'
     | '/register'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
@@ -206,7 +188,6 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/login'
-    | '/messages'
     | '/register'
     | '/settings'
   id:
@@ -217,7 +198,6 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/login'
-    | '/messages'
     | '/register'
     | '/settings'
   fileRoutesById: FileRoutesById
@@ -230,7 +210,6 @@ export interface RootRouteChildren {
   CoursesRoute: typeof CoursesRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
-  MessagesRoute: typeof MessagesRoute
   RegisterRoute: typeof RegisterRoute
   SettingsRoute: typeof SettingsRoute
 }
@@ -242,7 +221,6 @@ const rootRouteChildren: RootRouteChildren = {
   CoursesRoute: CoursesRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
-  MessagesRoute: MessagesRoute,
   RegisterRoute: RegisterRoute,
   SettingsRoute: SettingsRoute,
 }
@@ -263,7 +241,6 @@ export const routeTree = rootRoute
         "/courses",
         "/dashboard",
         "/login",
-        "/messages",
         "/register",
         "/settings"
       ]
@@ -285,9 +262,6 @@ export const routeTree = rootRoute
     },
     "/login": {
       "filePath": "login.tsx"
-    },
-    "/messages": {
-      "filePath": "messages.tsx"
     },
     "/register": {
       "filePath": "register.tsx"

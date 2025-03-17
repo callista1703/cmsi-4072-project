@@ -38,7 +38,6 @@ export default function LoginCard() {
 	const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
-		console.log("hello");
 
 		try {
 			const result = await signInUser(email, password);

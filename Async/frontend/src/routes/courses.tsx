@@ -1,15 +1,19 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Courses } from "@/pages/Courses";
 
 export const Route = createFileRoute("/courses")({
-	component: RouteComponent,
-	beforeLoad: ({ context }) => {
+	component: Courses,
+	beforeLoad: ({ context, location }) => {
 		if (context.auth.loading) {
 			return;
 		}
 
 		if (!context.auth?.session) {
 			throw redirect({
-				to: "/",
+				to: "/login",
+				search: {
+					redirect: location.href,
+				},
 			});
 		}
 	},

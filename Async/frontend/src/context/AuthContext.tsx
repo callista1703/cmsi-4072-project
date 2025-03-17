@@ -31,9 +31,6 @@ const AuthContext = createContext<AuthState | undefined>(undefined);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [session, setSession] = useState<Session | null>(null);
 	const [loading, setLoading] = useState(true);
-	console.log(session?.user.aud);
-	console.log(session?.user.aud);
-	console.log(session?.user.email);
 
 	useEffect(() => {
 		const getInitialSession = async () => {
@@ -51,6 +48,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
+			// console.log(session?.user.aud);
+			// console.log(session?.user.email);
 		});
 
 		return () => subscription.unsubscribe();

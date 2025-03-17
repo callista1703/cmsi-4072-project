@@ -71,14 +71,14 @@ export function Sidebar() {
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
-					<SidebarMenuItem>
+					{/* <SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/messages" className="cursor-pointer">
 								<MessageSquare className="mr-4 h-4 w-4" />
 								<span>Messages</span>
 							</Link>
 						</SidebarMenuButton>
-					</SidebarMenuItem>
+					</SidebarMenuItem> */}
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
 							<Link to="/settings" className="cursor-pointer">
