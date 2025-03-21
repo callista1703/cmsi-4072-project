@@ -1,0 +1,40 @@
+
+Continuing Group Project
+Documentation Feedback ~ Deliverable #2
+Updated Software Requirements Specification
+   Initial Development Schedule
+CMSI 4072 Spring 2025
+===========================================
+
+COMPONENT BREAKDOWN:
+   New components added 2nd semester [y/n]
+   Not required for this semester's exercise
+
+FUNCTIONAL REQUIREMENTS:
+   New requirements added 2nd semester [y/n]    no
+   New requirements adequate [y/n]              no
+
+   This is supposed to be an 'updated' requirements document to provide the
+   details of what you are adding on to your project this semester.  What I
+   see in the documents in your repository is the same as last semester.
+   You haven't added anything to the document.
+
+PERFORMANCE REQUIREMENTS:
+   New requirements added 2nd semester [y/n]    no
+   New requirements adequate [y/n]              no
+
+OVERALL ASSESSMENT:
+   Category                          Points
+   Component Breakdown                 1/1
+   Functional Requirements             2/4
+   Performance Requirements            0/2
+   Environment Requirements            1/1
+                                     =====
+   Subtotal                           4/10
+   ------------------------------------------------------
+   Total Percentage:   4/10 = 40% which is an F on this deliverable
+
+COMMENTS:
+---------
+
+See comments above in the Functional section.
