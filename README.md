@@ -46,6 +46,7 @@ This software uses the following open source packages:
 - [shadcn](https://ui.shadcn.com/)
 - Thank you to https://www.readme-templates.com/ for the template.
 
+And a big thank you to [@bjohnson05](https://github.com/bjohnson05) for guidance and support throughout the year!
 
 ## License
 
@@ -53,5 +54,5 @@ MIT
 
 ---
 
-> GitHub [@icomey8](https://github.com/icomey8) &nbsp;&middot;&nbsp;
+> Built by [@icomey8](https://github.com/icomey8) &nbsp;&middot; [@callista1703](https://github.com/callista1703) &nbsp;&middot; [@kevgregory](https://github.com/kevgregory)
 
