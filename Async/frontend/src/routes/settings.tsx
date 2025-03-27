@@ -1,7 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Settings } from "@/pages/Settings.tsx";
 
 export const Route = createFileRoute("/settings")({
-	component: RouteComponent,
+	component: Settings,
 	beforeLoad: ({ context, location }) => {
 		if (context.auth.loading) {
 			return;
@@ -19,5 +20,5 @@ export const Route = createFileRoute("/settings")({
 });
 
 function RouteComponent() {
-	return <div>Hello "/settings"!</div>;
+	return Settings;
 }
