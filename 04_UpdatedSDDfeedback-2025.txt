@@ -1,0 +1,52 @@
+
+Continuing Group Project
+Documentation Feedback ~ Deliverable #4
+Updated Software Design Document
+CMSI 4072 Spring 2025
+==========================================
+
+DETAILED CLASS/MODULE DESCRIPTIONS:
+   New classes/modules added 2nd semester [y/n] y
+   New classes/modules details adequate
+      or addressed that nothing new added [y/n] y
+
+DETAILED INTERFACE DESCRIPTIONS:
+   New interfaces added 2nd semester [y/n]      y
+   New interfaces details adequate
+      or addressed that nothing new added [y/n] y
+
+DETAILED DATA STRUCTURE DESCRIPTIONS:
+   New data structures added 2nd semester [y/n] y
+   New data structure details adequate
+      or addressed that nothing new added [y/n] y
+
+DETAILED DESIGN DIAGRAMS:
+   New diagrams added 2nd semester [y/n]        y
+   New diagrams adequate
+      or addressed that nothing new added [y/n] partially
+
+DATABASE DESIGN AND DESCRIPTION:
+   New ERD/diagrams added 2nd semester [y/n]    n
+   New ERD/diagrams adequate
+      or addressed that nothing new added [y/n] n
+
+
+----------------------------------------------
+OVERALL ASSESSMENT:
+   Category                          Points
+   CSC/CSU Descriptions:                2 of  2
+   Class Descriptions:                  3 of  3
+   Interface Descriptions:              3 of  3
+   Data structure Descriptions:         1 of  1
+   Design diagrams:                     3 of  4
+   Database design/descriptions:        0 of  2
+                                     ===========
+   Subtotal                            12 of 15
+   ------------------------------------------------------
+   Total Percentage:  12/15 = 80% which is a B on this deliverable
+
+Most everything is good, but you didn't really add much in the way of your
+diagrammatic representations.  Two of the diagrams are the same thing!
+
+Not bad at all, though.  Your verbal descriptions of the additions to your
+project are very good.
