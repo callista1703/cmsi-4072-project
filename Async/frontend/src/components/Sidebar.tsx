@@ -2,9 +2,10 @@ import {
 	Home,
 	BookOpen,
 	Calendar,
-	MessageSquare,
-	Settings,
-	Circle,
+	NotebookText,
+	UserPen,
+	CircleSlash,
+	ShieldHalf,
 } from "lucide-react";
 import {
 	Sidebar as ShadcnSidebar,
@@ -13,14 +14,34 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	SidebarRail,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupLabel,
 } from "@/components/ui/sidebar";
-import { Link, useRouter, useNavigate } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+	Link,
+	useRouter,
+	useNavigate,
+	useMatches,
+} from "@tanstack/react-router";
 import { useAuth } from "@/context/AuthContext";
 
 export function Sidebar() {
 	const { signOutUser } = useAuth();
 	const router = useRouter();
+	const matches = useMatches();
+	const currentPath = matches[matches.length - 1]?.pathname || "";
 
 	const handleSignOut = async () => {
 		try {
@@ -33,80 +54,117 @@ export function Sidebar() {
 	};
 
 	return (
-		<ShadcnSidebar className="w-52 border-r bg-white h-full">
-			<SidebarHeader className="p-6 bg-white">
-				<h2 className="text-2xl font-bold text-left">Async</h2>
+		<ShadcnSidebar collapsible="icon" className="bg-white h-full">
+			<SidebarHeader className="bg-white">
+				<SidebarMenu>
+					<SidebarMenuItem>
+						<SidebarMenuButton size="lg">
+							<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-muted-foreground text-sidebar-primary-foreground">
+								<CircleSlash />
+							</div>
+							<h1 className="font-semibold">Async</h1>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent className="bg-white">
-				<SidebarMenu className="h-full ">
-					<SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/dashboard" className="cursor-pointer">
-								<Home className="mr-4 h-4 w-4" />
-								<span>Dashboard</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-					{/* <SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/" className="cursor-pointer">
-								<Home className="mr-4 h-4 w-4" />
-								<span>Home</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem> */}
-					<SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/courses" className="cursor-pointer">
-								<BookOpen className="mr-4 h-4 w-4" />
-								<span>Courses</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-					<SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/calendar" className="cursor-pointer ">
-								<Calendar className="mr-4 h-4 w-4" />
-								<span>Calendar</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-					{/* <SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/messages" className="cursor-pointer">
-								<MessageSquare className="mr-4 h-4 w-4" />
-								<span>Messages</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem> */}
-					<SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/settings" className="cursor-pointer">
-								<Settings className="mr-4 h-4 w-4" />
-								<span>Settings</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-					{/* <SidebarMenuItem>
-						<SidebarMenuButton asChild className="ml-3 w-[90%] gap-0">
-							<Link to="/login" className="cursor-pointer">
-								<Settings className="mr-4 h-4 w-4" />
-								<span>Temp Login Link</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem> */}
-					<div className="flex items-center gap-2 mt-auto pb-6 ml-3">
-						<Circle size={45} fill="grey" />
-						<Button
-							variant="default"
-							className="cursor-pointer"
-							onClick={handleSignOut}
-						>
-							Sign-Out
-						</Button>
-					</div>
-				</SidebarMenu>
+				<SidebarGroup>
+					<SidebarGroupLabel>Core</SidebarGroupLabel>
+					<SidebarMenu>
+						<SidebarMenuItem>
+							<SidebarMenuButton
+								asChild
+								isActive={currentPath === "/dashboard"}
+							>
+								<Link to="/dashboard" className="cursor-pointer ">
+									<Home />
+									<span>Dashboard</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+						<SidebarMenuItem>
+							<SidebarMenuButton asChild isActive={currentPath === "/courses"}>
+								<Link to="/courses" className="cursor-pointer">
+									<BookOpen />
+									<span>Courses</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+						<SidebarMenuItem>
+							<SidebarMenuButton
+								asChild
+								isActive={currentPath === "/assignments"}
+							>
+								<Link to="/assignments" className="cursor-pointer">
+									<NotebookText />
+									<span>Assignments</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+						<SidebarMenuItem>
+							<SidebarMenuButton asChild isActive={currentPath === "/calendar"}>
+								<Link to="/calendar" className="cursor-pointer ">
+									<Calendar />
+									<span>Calendar</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroup>
+				<SidebarGroup>
+					<SidebarGroupLabel>Settings</SidebarGroupLabel>
+					<SidebarMenu>
+						<SidebarMenuItem>
+							<SidebarMenuButton asChild isActive={currentPath === "/settings"}>
+								<Link to="/settings" className="cursor-pointer">
+									<UserPen />
+									<span>Profile</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+						<SidebarMenuItem>
+							<SidebarMenuButton asChild isActive={currentPath === "/settings"}>
+								<Link to="/settings" className="cursor-pointer">
+									<ShieldHalf />
+									<span>Security</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroup>
 			</SidebarContent>
+
+			<SidebarFooter className="bg-white">
+				<SidebarMenu>
+					<SidebarMenuItem>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<SidebarMenuButton size={"lg"} className="cursor-pointer">
+									<Avatar>
+										<AvatarImage />
+										<AvatarFallback>IC</AvatarFallback>
+									</Avatar>
+									<div className="grid flex-1 text-left text-sm leading-tight">
+										<span className="truncate font-semibold">{"username"}</span>
+										<span className="truncate text-xs">{"user email"}</span>
+									</div>
+								</SidebarMenuButton>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end" side="right">
+								<DropdownMenuGroup>
+									<DropdownMenuItem
+										onClick={handleSignOut}
+										className="cursor-pointer"
+									>
+										Sign Out
+									</DropdownMenuItem>
+								</DropdownMenuGroup>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					</SidebarMenuItem>
+				</SidebarMenu>
+			</SidebarFooter>
+			<SidebarRail />
 		</ShadcnSidebar>
 	);
 }
