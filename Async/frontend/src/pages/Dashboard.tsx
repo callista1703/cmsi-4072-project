@@ -1,7 +1,7 @@
 import { Dashboard } from "@/components/Dashboard";
-import { Calendar } from "@/components/Calendar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Courses } from "@/components/Courses";
+import Calendar from "@/components/Calendar";
 
 export default function Home() {
 	return (

@@ -31,7 +31,7 @@ function RootRoute() {
 	return (
 		<>
 			{shouldShowPublicLayout ? <PublicLayout /> : <AuthenticatedLayout />}
-			<TanStackRouterDevtools position="top-right" />
+			<TanStackRouterDevtools position="bottom-right" />
 		</>
 	);
 }
