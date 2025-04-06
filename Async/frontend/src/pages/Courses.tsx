@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Database } from "types/database.types";
 import { PostgrestError } from "@supabase/supabase-js";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Circle } from "lucide-react";
 
 type Course = Database["public"]["Tables"]["Courses"]["Row"];
 type EnrollmentWithCourse = {

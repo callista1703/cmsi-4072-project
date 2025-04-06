@@ -6,7 +6,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { CalendarDays, BookOpen, Clock } from "lucide-react";
+import { CalendarDays, BookOpen, Clock, Circle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -129,6 +129,14 @@ type Assignment = {
 	description: string;
 };
 
+type UrgencyLevel = "high" | "medium" | "low";
+
+const urgencyColors: Record<UrgencyLevel, { bg: string; text: string }> = {
+	high: { bg: "rgb(239 68 68)", text: "rgb(239 68 68)" },    // red-500
+	medium: { bg: "rgb(234 179 8)", text: "rgb(234 179 8)" },  // yellow-500
+	low: { bg: "rgb(34 197 94)", text: "rgb(34 197 94)" },     // green-500
+};
+
 export const Assignments = () => {
 	const [assignments, setAssignments] = useState<Assignment[]>(
 		sampleAssignments as Assignment[]
@@ -188,16 +196,19 @@ export const Assignments = () => {
 					<AssignmentSection
 						title="Soon"
 						subtitle="Due within 7 days"
+						urgency="high"
 						assignments={soonAssignments}
 					/>
 					<AssignmentSection
 						title="Upcoming"
 						subtitle="Due within 14 days"
+						urgency="medium"
 						assignments={upcomingAssignments}
 					/>
 					<AssignmentSection
 						title="Distant"
-						subtitle="Due later"
+						subtitle="Due in the coming weeks"
+						urgency="low"
 						assignments={distantAssignments}
 					/>
 				</div>
@@ -210,15 +221,24 @@ function AssignmentSection({
 	title,
 	subtitle,
 	assignments,
+	urgency,
 }: {
 	title: string;
 	subtitle: string;
 	assignments: Assignment[];
+	urgency: UrgencyLevel;
 }) {
 	return (
 		<section className="p-6 rounded-lg border bg-card shadow-sm overflow-hidden max-w-full">
 			<div className="mb-4">
-				<h2 className="text-2xl font-semibold">{title}</h2>
+				<div className="flex items-center gap-2">
+					<Circle 
+						size={12} 
+						fill={urgencyColors[urgency].bg} 
+						color={urgencyColors[urgency].text} 
+					/>
+					<h2 className="text-2xl font-semibold">{title}</h2>
+				</div>
 				<p className="text-muted-foreground">{subtitle}</p>
 			</div>
 

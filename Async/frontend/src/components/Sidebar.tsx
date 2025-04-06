@@ -6,7 +6,7 @@ import {
 	UserPen,
 	CircleSlash,
 	ShieldHalf,
-	MessageSquare,
+	LogOut,
 } from "lucide-react";
 import {
 	Sidebar as ShadcnSidebar,
@@ -25,8 +25,6 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -112,9 +110,12 @@ export function Sidebar() {
 						</SidebarMenuItem>
 						{/* Added Discussions Link */}
 						<SidebarMenuItem>
-							<SidebarMenuButton asChild isActive={currentPath === "/discussion"}>
+							<SidebarMenuButton
+								asChild
+								isActive={currentPath === "/discussion"}
+							>
 								<Link to="/discussion" className="cursor-pointer">
-									<MessageSquare />
+									<LogOut />
 									<span>Discussions</span>
 								</Link>
 							</SidebarMenuButton>
@@ -152,15 +153,12 @@ export function Sidebar() {
 								<SidebarMenuButton size={"lg"} className="cursor-pointer">
 									<Avatar>
 										<AvatarImage />
-										<AvatarFallback>IC</AvatarFallback>
+										<AvatarFallback>JD</AvatarFallback>{" "}
+										{/* Placeholder for user initials */}
 									</Avatar>
 									<div className="grid flex-1 text-left text-sm leading-tight">
-										<span className="truncate font-semibold">
-											{"username"}
-										</span>
-										<span className="truncate text-xs">
-											{"user email"}
-										</span>
+										<span className="truncate font-semibold">{"username"}</span>
+										<span className="truncate text-xs">{"user email"}</span>
 									</div>
 								</SidebarMenuButton>
 							</DropdownMenuTrigger>
@@ -170,7 +168,8 @@ export function Sidebar() {
 										onClick={handleSignOut}
 										className="cursor-pointer"
 									>
-										Sign Out
+										<LogOut />
+										<span>Sign Out</span>
 									</DropdownMenuItem>
 								</DropdownMenuGroup>
 							</DropdownMenuContent>
