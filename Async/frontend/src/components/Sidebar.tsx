@@ -6,6 +6,7 @@ import {
 	UserPen,
 	CircleSlash,
 	ShieldHalf,
+	MessageSquare,
 } from "lucide-react";
 import {
 	Sidebar as ShadcnSidebar,
@@ -109,6 +110,15 @@ export function Sidebar() {
 								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
+						{/* Added Discussions Link */}
+						<SidebarMenuItem>
+							<SidebarMenuButton asChild isActive={currentPath === "/discussion"}>
+								<Link to="/discussion" className="cursor-pointer">
+									<MessageSquare />
+									<span>Discussions</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
 					</SidebarMenu>
 				</SidebarGroup>
 				<SidebarGroup>
@@ -145,8 +155,12 @@ export function Sidebar() {
 										<AvatarFallback>IC</AvatarFallback>
 									</Avatar>
 									<div className="grid flex-1 text-left text-sm leading-tight">
-										<span className="truncate font-semibold">{"username"}</span>
-										<span className="truncate text-xs">{"user email"}</span>
+										<span className="truncate font-semibold">
+											{"username"}
+										</span>
+										<span className="truncate text-xs">
+											{"user email"}
+										</span>
 									</div>
 								</SidebarMenuButton>
 							</DropdownMenuTrigger>
