@@ -15,6 +15,7 @@ import { Route as SecurityImport } from './routes/security'
 import { Route as RegisterImport } from './routes/register'
 import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
+import { Route as DiscussionImport } from './routes/discussion'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as CoursesImport } from './routes/courses'
 import { Route as CalendarImport } from './routes/calendar'
@@ -45,6 +46,12 @@ const ProfileRoute = ProfileImport.update({
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DiscussionRoute = DiscussionImport.update({
+  id: '/discussion',
+  path: '/discussion',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -130,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
+    '/discussion': {
+      id: '/discussion'
+      path: '/discussion'
+      fullPath: '/discussion'
+      preLoaderRoute: typeof DiscussionImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -170,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/discussion': typeof DiscussionRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -183,6 +198,7 @@ export interface FileRoutesByTo {
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/discussion': typeof DiscussionRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -197,6 +213,7 @@ export interface FileRoutesById {
   '/calendar': typeof CalendarRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/discussion': typeof DiscussionRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -212,6 +229,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/courses'
     | '/dashboard'
+    | '/discussion'
     | '/login'
     | '/profile'
     | '/register'
@@ -224,6 +242,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/courses'
     | '/dashboard'
+    | '/discussion'
     | '/login'
     | '/profile'
     | '/register'
@@ -236,6 +255,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/courses'
     | '/dashboard'
+    | '/discussion'
     | '/login'
     | '/profile'
     | '/register'
@@ -250,6 +270,7 @@ export interface RootRouteChildren {
   CalendarRoute: typeof CalendarRoute
   CoursesRoute: typeof CoursesRoute
   DashboardRoute: typeof DashboardRoute
+  DiscussionRoute: typeof DiscussionRoute
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
@@ -263,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalendarRoute: CalendarRoute,
   CoursesRoute: CoursesRoute,
   DashboardRoute: DashboardRoute,
+  DiscussionRoute: DiscussionRoute,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
@@ -285,6 +307,7 @@ export const routeTree = rootRoute
         "/calendar",
         "/courses",
         "/dashboard",
+        "/discussion",
         "/login",
         "/profile",
         "/register",
@@ -308,6 +331,9 @@ export const routeTree = rootRoute
     },
     "/dashboard": {
       "filePath": "dashboard.tsx"
+    },
+    "/discussion": {
+      "filePath": "discussion.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
