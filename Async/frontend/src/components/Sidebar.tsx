@@ -115,16 +115,16 @@ export function Sidebar() {
 					<SidebarGroupLabel>Settings</SidebarGroupLabel>
 					<SidebarMenu>
 						<SidebarMenuItem>
-							<SidebarMenuButton asChild isActive={currentPath === "/settings"}>
-								<Link to="/settings" className="cursor-pointer">
+							<SidebarMenuButton asChild isActive={currentPath === "/profile"}>
+								<Link to="/profile" className="cursor-pointer">
 									<UserPen />
 									<span>Profile</span>
 								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 						<SidebarMenuItem>
-							<SidebarMenuButton asChild isActive={currentPath === "/settings"}>
-								<Link to="/settings" className="cursor-pointer">
+							<SidebarMenuButton asChild isActive={currentPath === "/security"}>
+								<Link to="/security" className="cursor-pointer">
 									<ShieldHalf />
 									<span>Security</span>
 								</Link>

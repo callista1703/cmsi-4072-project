@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function Security() {
-  const [twoFAEnabled, setTwoFAEnabled] = useState(false);
+const Security: React.FC = () => {
+  const [twoFAEnabled, setTwoFAEnabled] = useState<boolean>(false);
 
   const handleToggle2FA = () => {
     setTwoFAEnabled(!twoFAEnabled);
@@ -19,6 +19,7 @@ export default function Security() {
 
   return (
     <div className="space-y-6 text-base">
+      {/* Two-Factor Authentication */}
       <div>
         <label className="block font-medium text-gray-700 mb-2 text-lg">
           Two-Factor Authentication
@@ -27,22 +28,24 @@ export default function Security() {
           <Button
             onClick={handleToggle2FA}
             variant="default"
-            className="px-4 py-2"
+            className="px-4 py-2 text-lg"
           >
             {twoFAEnabled ? "Disable 2FA" : "Enable 2FA"}
           </Button>
         </div>
       </div>
 
+      {/* Reset Password */}
       <div>
         <label className="block font-medium text-gray-700 mb-2 text-lg">
           Reset Password
         </label>
-        <Button variant="default" className="px-4 py-2">
+        <Button variant="default" className="px-4 py-2 text-lg">
           Reset Password
         </Button>
       </div>
 
+      {/* Delete Account */}
       <div>
         <label className="block font-medium text-gray-700 mb-2 text-lg">
           Delete Account
@@ -56,4 +59,6 @@ export default function Security() {
       </div>
     </div>
   );
-}
+};
+
+export default Security;

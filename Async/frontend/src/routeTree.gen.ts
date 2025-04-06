@@ -11,8 +11,9 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SettingsImport } from './routes/settings'
+import { Route as SecurityImport } from './routes/security'
 import { Route as RegisterImport } from './routes/register'
+import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as CoursesImport } from './routes/courses'
@@ -23,15 +24,21 @@ import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const SettingsRoute = SettingsImport.update({
-  id: '/settings',
-  path: '/settings',
+const SecurityRoute = SecurityImport.update({
+  id: '/security',
+  path: '/security',
   getParentRoute: () => rootRoute,
 } as any)
 
 const RegisterRoute = RegisterImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileRoute = ProfileImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -130,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
+      parentRoute: typeof rootRoute
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -137,11 +151,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsImport
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityImport
       parentRoute: typeof rootRoute
     }
   }
@@ -157,8 +171,9 @@ export interface FileRoutesByFullPath {
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
-  '/settings': typeof SettingsRoute
+  '/security': typeof SecurityRoute
 }
 
 export interface FileRoutesByTo {
@@ -169,8 +184,9 @@ export interface FileRoutesByTo {
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
-  '/settings': typeof SettingsRoute
+  '/security': typeof SecurityRoute
 }
 
 export interface FileRoutesById {
@@ -182,8 +198,9 @@ export interface FileRoutesById {
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
-  '/settings': typeof SettingsRoute
+  '/security': typeof SecurityRoute
 }
 
 export interface FileRouteTypes {
@@ -196,8 +213,9 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/login'
+    | '/profile'
     | '/register'
-    | '/settings'
+    | '/security'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -207,8 +225,9 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/login'
+    | '/profile'
     | '/register'
-    | '/settings'
+    | '/security'
   id:
     | '__root__'
     | '/'
@@ -218,8 +237,9 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/login'
+    | '/profile'
     | '/register'
-    | '/settings'
+    | '/security'
   fileRoutesById: FileRoutesById
 }
 
@@ -231,8 +251,9 @@ export interface RootRouteChildren {
   CoursesRoute: typeof CoursesRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
-  SettingsRoute: typeof SettingsRoute
+  SecurityRoute: typeof SecurityRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -243,8 +264,9 @@ const rootRouteChildren: RootRouteChildren = {
   CoursesRoute: CoursesRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
-  SettingsRoute: SettingsRoute,
+  SecurityRoute: SecurityRoute,
 }
 
 export const routeTree = rootRoute
@@ -264,8 +286,9 @@ export const routeTree = rootRoute
         "/courses",
         "/dashboard",
         "/login",
+        "/profile",
         "/register",
-        "/settings"
+        "/security"
       ]
     },
     "/": {
@@ -289,11 +312,14 @@ export const routeTree = rootRoute
     "/login": {
       "filePath": "login.tsx"
     },
+    "/profile": {
+      "filePath": "profile.tsx"
+    },
     "/register": {
       "filePath": "register.tsx"
     },
-    "/settings": {
-      "filePath": "settings.tsx"
+    "/security": {
+      "filePath": "security.tsx"
     }
   }
 }

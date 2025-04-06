@@ -1,23 +1,24 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function ProfileAppearance() {
-  const [username, setUsername] = useState("");
-  const [theme, setTheme] = useState("light");
-  const [avatar, setAvatar] = useState(null);
-  const [role, setRole] = useState("Student");
+const ProfileAppearance: React.FC = () => {
+  const [username, setUsername] = useState<string>("");
+  const [theme, setTheme] = useState<string>("light");
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const [role, setRole] = useState<string>("Student");
 
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const reader = new FileReader();
-      reader.onload = () => setAvatar(reader.result);
+      reader.onload = () => setAvatar(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
   return (
     <div className="space-y-8 text-base">
+      {/* Avatar Section */}
       <div className="flex flex-col items-center">
         <img
           src={avatar || "https://via.placeholder.com/150"}
@@ -39,6 +40,7 @@ export default function ProfileAppearance() {
         />
       </div>
 
+      {/* Username Section */}
       <div className="space-y-2">
         <label className="block font-medium text-gray-700 text-lg">
           Username
@@ -52,6 +54,7 @@ export default function ProfileAppearance() {
         />
       </div>
 
+      {/* Role Section */}
       <div className="space-y-2">
         <label className="block font-medium text-gray-700 text-lg">
           Role
@@ -78,6 +81,7 @@ export default function ProfileAppearance() {
         </div>
       </div>
 
+      {/* Theme Toggle */}
       <div className="space-y-2">
         <label className="block font-medium text-gray-700 text-lg">
           Theme
@@ -98,6 +102,7 @@ export default function ProfileAppearance() {
         </div>
       </div>
 
+      {/* Save Button */}
       <div>
         <Button variant="default" className="px-6 py-3 text-lg">
           Save Changes
@@ -105,4 +110,6 @@ export default function ProfileAppearance() {
       </div>
     </div>
   );
-}
+};
+
+export default ProfileAppearance;
