@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import HomeImage from "@/assets/HomeImage.png";
+import CalendarIcon from "@/assets/CalendarIcon.png";
+import DBicon from "@/assets/DBicon.png";
+import RTEIcon from "@/assets/RTEIcon.png";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/")({
@@ -9,6 +12,24 @@ export const Route = createFileRoute("/")({
 });
 
 function HomeComponent() {
+  const features = [
+    {
+      title: "Calendar",
+      desc: "Organize your schedule effortlessly with our interactive calendar.",
+      icon: CalendarIcon,
+    },
+    {
+      title: "Discussion Board",
+      desc: "Collaborate in real time—ask questions, share ideas, and build community.",
+      icon: DBicon,
+    },
+    {
+      title: "Rich Text Editor",
+      desc: "Create and edit content with ease using our intuitive editor.",
+      icon: RTEIcon,
+    },
+  ];
+
   return (
     <div className="w-full bg-[#f9f8f3] text-black font-sans">
       {/* Sticky Nav */}
@@ -16,10 +37,18 @@ function HomeComponent() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-extrabold tracking-wide">Async</h1>
           <div className="flex gap-4">
-            <Button asChild variant="ghost" className="rounded-full px-6 py-2 text-sm font-semibold border border-black hover:bg-black hover:text-white transition-all duration-300">
+            <Button
+              asChild
+              variant="ghost"
+              className="rounded-full px-6 py-2 text-sm font-semibold border border-black hover:bg-black hover:text-white transition-all duration-300"
+            >
               <Link to="/login">Sign In</Link>
             </Button>
-            <Button asChild variant="default" className="rounded-full px-6 py-2 text-sm font-semibold hover:scale-105 transition-transform">
+            <Button
+              asChild
+              variant="default"
+              className="rounded-full px-6 py-2 text-sm font-semibold hover:scale-105 transition-transform"
+            >
               <Link to="/register">Create Account</Link>
             </Button>
           </div>
@@ -51,7 +80,11 @@ function HomeComponent() {
           transition={{ duration: 1 }}
           className="w-full flex justify-center mb-16"
         >
-          <img src={HomeImage} alt="Async App Preview on iPhones" className="max-w-full h-auto" />
+          <img
+            src={HomeImage}
+            alt="Async App Preview on iPhones"
+            className="max-w-full h-auto"
+          />
         </motion.div>
 
         {/* Features */}
@@ -59,16 +92,17 @@ function HomeComponent() {
           <div className="max-w-6xl mx-auto px-6 text-center">
             <h2 className="text-4xl font-bold mb-12">Our Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              {[
-                { title: "Calendar", desc: "Organize your schedule effortlessly with our interactive calendar." },
-                { title: "Discussion Board", desc: "Collaborate in real time—ask questions, share ideas, and build community." },
-                { title: "Rich Text Editor", desc: "Create and edit content with ease using our intuitive editor." },
-              ].map(({ title, desc }) => (
+              {features.map(({ title, desc, icon }) => (
                 <motion.div
                   key={title}
                   whileHover={{ scale: 1.05 }}
-                  className="p-8 bg-white rounded-xl shadow-md transition-all duration-300"
+                  className="relative p-8 pt-16 bg-white rounded-xl shadow-md transition-all duration-300 overflow-visible"
                 >
+                  <img
+                    src={icon}
+                    alt={`${title} icon`}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 object-contain"
+                  />
                   <h3 className="text-2xl font-bold mb-4">{title}</h3>
                   <p className="text-lg text-gray-600">{desc}</p>
                 </motion.div>
@@ -83,9 +117,18 @@ function HomeComponent() {
             <h2 className="text-4xl font-bold mb-12">How It Works</h2>
             <div className="space-y-16">
               {[
-                { title: "Manage Events", desc: "Use our built-in calendar to schedule and manage your events seamlessly." },
-                { title: "Access Courses", desc: "Easily access your courses, check your class schedule, and manage assignments." },
-                { title: "Discussion Board", desc: "Engage with peers and instructors in our interactive discussion board." },
+                {
+                  title: "Manage Events",
+                  desc: "Use our built-in calendar to schedule and manage your events seamlessly.",
+                },
+                {
+                  title: "Access Courses",
+                  desc: "Easily access your courses, check your class schedule, and manage assignments.",
+                },
+                {
+                  title: "Discussion Board",
+                  desc: "Engage with peers and instructors in our interactive discussion board.",
+                },
               ].map(({ title, desc }, i) => (
                 <motion.div
                   key={title}
