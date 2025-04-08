@@ -13,14 +13,6 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 // Sample assignment data
 const sampleAssignments = [
 	{
-		id: 1,
-		title: "Research Paper: Modern Architecture",
-		course: "ARC101",
-		dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-		priority: "high",
-		description: "5-page research paper on modern architectural movements",
-	},
-	{
 		id: 2,
 		title: "Problem Set 3: Linear Algebra",
 		course: "MATH240",
@@ -35,14 +27,6 @@ const sampleAssignments = [
 		dueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
 		priority: "high",
 		description: "Analyze market trends for assigned industry sector",
-	},
-	{
-		id: 4,
-		title: "Lab Report: Chemical Reactions",
-		course: "CHEM201",
-		dueDate: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000), // 12 days from now
-		priority: "medium",
-		description: "Document and analyze results from last week's lab experiment",
 	},
 	{
 		id: 5,
@@ -78,14 +62,6 @@ const sampleAssignments = [
 		description: "Study chapters 5-7 for in-class quiz",
 	},
 	{
-		id: 9,
-		title: "Presentation: Renewable Energy",
-		course: "ENV300",
-		dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
-		priority: "high",
-		description: "10-minute presentation on a renewable energy source",
-	},
-	{
 		id: 10,
 		title: "Code Review: Python Project",
 		course: "CS210",
@@ -100,14 +76,6 @@ const sampleAssignments = [
 		dueDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000), // 6 days from now
 		priority: "medium",
 		description: "2-page response to assigned readings",
-	},
-	{
-		id: 12,
-		title: "Problem Set: Quantum Physics",
-		course: "PHYS401",
-		dueDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000), // 6 days from now
-		priority: "high",
-		description: "Solve problems 15-30 from chapter 8",
 	},
 	{
 		id: 13,
@@ -148,6 +116,11 @@ export const Assignments = () => {
 	const [distantAssignments, setDistantAssignments] = useState<Assignment[]>(
 		[]
 	);
+
+	const sortByDueDate = (a: Assignment, b: Assignment) => {
+		return a.dueDate.getTime() - b.dueDate.getTime();
+	};
+
 	useEffect(() => {
 		const now = new Date();
 		const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -156,21 +129,25 @@ export const Assignments = () => {
 		);
 
 		setSoonAssignments(
-			assignments.filter((assignment) => assignment.dueDate <= sevenDaysFromNow)
+			assignments
+				.filter((assignment) => assignment.dueDate <= sevenDaysFromNow)
+				.sort(sortByDueDate)
 		);
 
 		setUpcomingAssignments(
-			assignments.filter(
-				(assignment) =>
-					assignment.dueDate > sevenDaysFromNow &&
-					assignment.dueDate <= fourteenDaysFromNow
-			)
+			assignments
+				.filter(
+					(assignment) =>
+						assignment.dueDate > sevenDaysFromNow &&
+						assignment.dueDate <= fourteenDaysFromNow
+				)
+				.sort(sortByDueDate)
 		);
 
 		setDistantAssignments(
-			assignments.filter(
-				(assignment) => assignment.dueDate > fourteenDaysFromNow
-			)
+			assignments
+				.filter((assignment) => assignment.dueDate > fourteenDaysFromNow)
+				.sort(sortByDueDate)
 		);
 	}, [assignments]);
 
