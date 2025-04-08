@@ -146,7 +146,7 @@ const Calendar = () => {
 										className={`
                       p-2 text-center cursor-pointer transition-colors duration-200 rounded-md
                       ${isCurrentMonth ? "text-gray-800" : "text-gray-400"}
-                      ${isSelected ? "bg-gray-800 text-white" : "bg-gray-50 hover:bg-gray-100"}
+                      ${isSelected ? "bg-blue-900 text-white" : "bg-gray-50 hover:bg-gray-100"}
                       ${isToday && !isSelected ? "font-bold underline" : ""}
                     `}
 									>
@@ -223,7 +223,7 @@ const Calendar = () => {
 							<Button
 								onClick={handleAddEvent}
 								variant="default"
-								className="w-full"
+								className="w-full bg-blue-900"
 							>
 								Add Event
 							</Button>

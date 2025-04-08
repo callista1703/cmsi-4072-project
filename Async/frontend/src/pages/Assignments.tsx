@@ -132,9 +132,9 @@ type Assignment = {
 type UrgencyLevel = "high" | "medium" | "low";
 
 const urgencyColors: Record<UrgencyLevel, { bg: string; text: string }> = {
-	high: { bg: "rgb(239 68 68)", text: "rgb(239 68 68)" },    // red-500
-	medium: { bg: "rgb(234 179 8)", text: "rgb(234 179 8)" },  // yellow-500
-	low: { bg: "rgb(34 197 94)", text: "rgb(34 197 94)" },     // green-500
+	high: { bg: "rgb(239 68 68)", text: "rgb(239 68 68)" }, // red-500
+	medium: { bg: "rgb(234 179 8)", text: "rgb(234 179 8)" }, // yellow-500
+	low: { bg: "rgb(34 197 94)", text: "rgb(34 197 94)" }, // green-500
 };
 
 export const Assignments = () => {
@@ -189,7 +189,7 @@ export const Assignments = () => {
 			<div className="flex flex-col gap-4 py-6 w-full px-6">
 				<div className="flex gap-2 items-center mb-3">
 					<SidebarTrigger />
-					<h1 className="text-3xl font-bold">Assignments</h1>
+					<h1 className="text-xl font-bold">Assignments</h1>
 				</div>
 
 				<div className="space-y-8 w-full">
@@ -232,12 +232,12 @@ function AssignmentSection({
 		<section className="p-6 rounded-lg border bg-card shadow-sm overflow-hidden max-w-full">
 			<div className="mb-4">
 				<div className="flex items-center gap-2">
-					<Circle 
-						size={12} 
-						fill={urgencyColors[urgency].bg} 
-						color={urgencyColors[urgency].text} 
+					<Circle
+						size={12}
+						fill={urgencyColors[urgency].bg}
+						color={urgencyColors[urgency].text}
 					/>
-					<h2 className="text-2xl font-semibold">{title}</h2>
+					<h2 className="text-xl font-semibold">{title}</h2>
 				</div>
 				<p className="text-muted-foreground">{subtitle}</p>
 			</div>

@@ -92,9 +92,11 @@ export const Courses = () => {
 				<div className="flex justify-between ">
 					<div className="flex gap-2 items-center mb-3">
 						<SidebarTrigger />
-						<h1 className="text-2xl font-bold">Courses - Spring 2025</h1>
+						<h1 className="text-xl font-bold">Courses</h1>
 					</div>
-					<Button variant="default">Join Course</Button>
+					<Button variant="default" className="bg-blue-900">
+						Join Course
+					</Button>
 				</div>
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{courses.map((course) => (

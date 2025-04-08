@@ -4,7 +4,7 @@ import {
 	Calendar,
 	NotebookText,
 	UserPen,
-	CircleSlash,
+	PuzzleIcon,
 	ShieldHalf,
 	LogOut,
 } from "lucide-react";
@@ -58,8 +58,8 @@ export function Sidebar() {
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton size="lg">
-							<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-muted-foreground text-sidebar-primary-foreground">
-								<CircleSlash />
+							<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-blue-900 text-sidebar-primary-foreground">
+								<PuzzleIcon />
 							</div>
 							<h1 className="font-semibold">Async</h1>
 						</SidebarMenuButton>
