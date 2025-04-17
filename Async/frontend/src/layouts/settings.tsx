@@ -57,24 +57,6 @@ export const SettingsLayout = ({
 						</NavigationMenuItem>
 					</NavigationMenuList>
 				</NavigationMenu>
-				{/* <nav className="w-full">
-					<ul className="flex gap-3 text-sm font-semibold">
-						<li>
-							<Link to="/profile">
-								<button className="rounded-md bg-gray-200 p-1 px-2">
-									Profile
-								</button>
-							</Link>
-						</li>
-						<li>
-							<Link to="/security">
-								<button className="rounded-md bg-gray-200 p-1 px-2">
-									Security
-								</button>
-							</Link>
-						</li>
-					</ul>
-				</nav> */}
 			</div>
 			{children}
 		</div>

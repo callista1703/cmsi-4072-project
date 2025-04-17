@@ -1,8 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { Courses } from "@/pages/Courses";
+import { CoursePage } from "@/pages/CoursePage";
 
-export const Route = createFileRoute("/courses")({
-	component: Courses,
+export const Route = createFileRoute("/courses/$courseId")({
+	component: CoursePage,
 	beforeLoad: ({ context, location }) => {
 		if (context.auth.loading) {
 			return;
@@ -18,7 +18,3 @@ export const Route = createFileRoute("/courses")({
 		}
 	},
 });
-
-function RouteComponent() {
-	return <div>Hello "/courses"!</div>;
-}
