@@ -48,7 +48,7 @@ const classes: Class[] = [
 
 export function Courses() {
 	return (
-		<Card className="w-full">
+		<Card className="w-full mb-6">
 			<CardHeader>
 				<CardTitle>Your Classes</CardTitle>
 			</CardHeader>

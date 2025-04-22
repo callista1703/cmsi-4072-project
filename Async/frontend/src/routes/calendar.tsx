@@ -1,8 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import Calendar from "../components/Calendar.tsx";
+import { CalendarPage } from "../pages/CalendarPage";
 
 export const Route = createFileRoute("/calendar")({
-	component: Calendar,
+	component: CalendarPage,
 	beforeLoad: ({ context, location }) => {
 		if (context.auth.loading) {
 			return;

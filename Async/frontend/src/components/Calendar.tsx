@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -91,19 +89,15 @@ const Calendar = () => {
 	const calendarDays = generateCalendarDays();
 
 	return (
-		<div className="p-5">
-			{/* Two-column layout: Calendar (left) and Event Details (right) */}
+		<>
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 				{/* Calendar Card */}
-				<Card className="lg:col-span-2 flex flex-col min-h-[600px]">
-					<CardHeader>
-						<CardTitle className="text-2xl">Calendar</CardTitle>
-					</CardHeader>
+				<Card className="lg:col-span-2 flex flex-col h-full">
 					<CardContent className="flex-1">
 						{/* Month Navigation */}
-						<div className="flex justify-between items-center mb-4">
+						<div className="flex justify-between items-center my-6">
 							<button
-								className="text-gray-600 text-xl"
+								className="text-gray-600 text-xl cursor-pointer"
 								onClick={handlePreviousMonth}
 							>
 								&lt;
@@ -113,7 +107,7 @@ const Calendar = () => {
 								{currentMonth.getFullYear()}
 							</h2>
 							<button
-								className="text-gray-600 text-xl"
+								className="text-gray-600 text-xl cursor-pointer"
 								onClick={handleNextMonth}
 							>
 								&gt;
@@ -130,7 +124,7 @@ const Calendar = () => {
 						</div>
 
 						{/* Calendar Dates */}
-						<div className="grid grid-cols-7 gap-1">
+						<div className="grid grid-cols-7 gap-3">
 							{calendarDays.map((day) => {
 								const isCurrentMonth =
 									day.getMonth() === currentMonth.getMonth();
@@ -144,7 +138,7 @@ const Calendar = () => {
 										key={day.toISOString()}
 										onClick={() => handleDateClick(day)}
 										className={`
-                      p-2 text-center cursor-pointer transition-colors duration-200 rounded-md
+                      flex items-center justify-center p-2 text-center h-18 cursor-pointer transition-colors duration-200 rounded-md
                       ${isCurrentMonth ? "text-gray-800" : "text-gray-400"}
                       ${isSelected ? "bg-blue-900 text-white" : "bg-gray-50 hover:bg-gray-100"}
                       ${isToday && !isSelected ? "font-bold underline" : ""}
@@ -254,7 +248,7 @@ const Calendar = () => {
 					</CardContent>
 				</Card>
 			</div>
-		</div>
+		</>
 	);
 };
 
