@@ -1,124 +1,133 @@
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { CalendarDays, BookOpen, Clock, Circle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { AssignmentSection } from "@/components/assignments/AssignmentSection";
+import { AssignmentType } from "@/types/assignment";
+import { supabase } from "@/supabaseClient";
+import type { PostgrestError } from "@supabase/supabase-js";
+import { useQuery } from "@tanstack/react-query";
+import type { Database } from "@/types/database.types";
 
 // Sample assignment data
-const sampleAssignments = [
+const sampleAssignments: AssignmentType[] = [
 	{
-		id: 2,
+		assignment_id: "2", // Assuming IDs are strings in your DB
 		title: "Problem Set 3: Linear Algebra",
-		course: "MATH240",
-		dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
-		priority: "medium",
 		description: "Complete problems 1-20 in chapter 4",
+		course_id: "MATH240", // Match your course_id field
+		due_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0], // Format as YYYY-MM-DD
+		created_at: new Date().toISOString(), // Current timestamp
 	},
 	{
-		id: 3,
+		assignment_id: "3",
 		title: "Group Project: Market Analysis",
-		course: "BUS330",
-		dueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
-		priority: "high",
 		description: "Analyze market trends for assigned industry sector",
+		course_id: "BUS330",
+		due_date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0],
+		created_at: new Date().toISOString(),
 	},
 	{
-		id: 5,
+		assignment_id: "5",
 		title: "Final Project: Web Application",
-		course: "CS350",
-		dueDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000), // 20 days from now
-		priority: "high",
+		course_id: "CS300",
+		due_date: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0], // 20 days from now
 		description: "Build a full-stack web application with documentation",
+		created_at: new Date().toISOString(),
 	},
 	{
-		id: 6,
+		assignment_id: "6",
 		title: "Term Paper: Global Economics",
-		course: "ECON400",
-		dueDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000), // 25 days from now
-		priority: "medium",
+		course_id: "ECON400",
+		due_date: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0], // 25 days from now
+		created_at: new Date().toISOString(),
 		description: "10-page analysis of current global economic trends",
 	},
-	// Additional assignments for the "Soon" section
 	{
-		id: 7,
-		title: "Essay: Shakespeare Analysis",
-		course: "ENG220",
-		dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
-		priority: "high",
-		description: "Critical analysis of themes in Hamlet",
-	},
-	{
-		id: 8,
-		title: "Quiz Preparation: Cell Biology",
-		course: "BIO101",
-		dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-		priority: "medium",
-		description: "Study chapters 5-7 for in-class quiz",
-	},
-	{
-		id: 10,
-		title: "Code Review: Python Project",
-		course: "CS210",
-		dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
-		priority: "low",
-		description: "Peer review of classmate's Python project",
-	},
-	{
-		id: 11,
-		title: "Reading Response: Political Theory",
-		course: "POL202",
-		dueDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000), // 6 days from now
-		priority: "medium",
+		assignment_id: "11",
+		title: "Reading Response: Political Theory Part A",
+		course_id: "POL202",
+		due_date: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0], // 6 days from now
+		created_at: new Date().toISOString(),
 		description: "2-page response to assigned readings",
 	},
 	{
-		id: 13,
+		assignment_id: "12",
+		title: "Reading Response: Political Theory Part B",
+		course_id: "POL202",
+		due_date: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0], // 6 days from now
+		created_at: new Date().toISOString(),
+		description: "Discussion Board Post on one selected reading",
+	},
+	{
+		assignment_id: "13",
 		title: "Discussion Post: Ethics in Business",
-		course: "BUS220",
-		dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
-		priority: "low",
+		course_id: "BUS220",
+		due_date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
+			.toISOString()
+			.split("T")[0], // 1 day from now
+		created_at: new Date().toISOString(),
 		description: "Respond to discussion prompt and reply to two classmates",
 	},
 ];
 
 // Assignment type definition
-type Assignment = {
-	id: number;
-	title: string;
-	course: string;
-	dueDate: Date;
-	priority: "low" | "medium" | "high";
-	description: string;
-};
-
-type UrgencyLevel = "high" | "medium" | "low";
-
-const urgencyColors: Record<UrgencyLevel, { bg: string; text: string }> = {
-	high: { bg: "rgb(239 68 68)", text: "rgb(239 68 68)" }, // red-500
-	medium: { bg: "rgb(234 179 8)", text: "rgb(234 179 8)" }, // yellow-500
-	low: { bg: "rgb(34 197 94)", text: "rgb(34 197 94)" }, // green-500
-};
 
 export const Assignments = () => {
-	const [assignments, setAssignments] = useState<Assignment[]>(
-		sampleAssignments as Assignment[]
-	);
-	const [soonAssignments, setSoonAssignments] = useState<Assignment[]>([]);
-	const [upcomingAssignments, setUpcomingAssignments] = useState<Assignment[]>(
-		[]
-	);
-	const [distantAssignments, setDistantAssignments] = useState<Assignment[]>(
-		[]
-	);
+	const [soonAssignments, setSoonAssignments] = useState<AssignmentType[]>([]);
+	const [upcomingAssignments, setUpcomingAssignments] = useState<
+		AssignmentType[]
+	>([]);
+	const [distantAssignments, setDistantAssignments] = useState<
+		AssignmentType[]
+	>([]);
 
-	const sortByDueDate = (a: Assignment, b: Assignment) => {
-		return a.dueDate.getTime() - b.dueDate.getTime();
+	const {
+		data: assignments = [],
+		error,
+		isLoading,
+		isError,
+	} = useQuery({
+		queryKey: ["assignments"],
+		queryFn: async () => {
+			// First get the user's enrollments
+			const { data: enrollments, error: enrollmentsError } = await supabase
+				.from("Enrollments")
+				.select("course_id");
+
+			if (enrollmentsError) throw enrollmentsError;
+			if (!enrollments?.length) return [];
+
+			// Then get assignments for those courses
+			const { data: assignments, error: assignmentsError } = await supabase
+				.from("Assignments")
+				.select("*")
+				.in(
+					"course_id",
+					enrollments.map((e) => e.course_id)
+				)
+				.order("due_date", { ascending: true });
+
+			if (assignmentsError) throw assignmentsError;
+
+			return assignments || [];
+		},
+	});
+
+	const sortByDueDate = (a: AssignmentType, b: AssignmentType) => {
+		const dateA = new Date(a.due_date);
+		const dateB = new Date(b.due_date);
+		return dateA.getTime() - dateB.getTime();
 	};
 
 	useEffect(() => {
@@ -130,26 +139,33 @@ export const Assignments = () => {
 
 		setSoonAssignments(
 			assignments
-				.filter((assignment) => assignment.dueDate <= sevenDaysFromNow)
+				.filter((assignment) => {
+					const dueDate = new Date(assignment.due_date);
+					return dueDate <= sevenDaysFromNow;
+				})
 				.sort(sortByDueDate)
 		);
 
 		setUpcomingAssignments(
 			assignments
-				.filter(
-					(assignment) =>
-						assignment.dueDate > sevenDaysFromNow &&
-						assignment.dueDate <= fourteenDaysFromNow
-				)
+				.filter((assignment) => {
+					const dueDate = new Date(assignment.due_date);
+					return dueDate > sevenDaysFromNow && dueDate <= fourteenDaysFromNow;
+				})
 				.sort(sortByDueDate)
 		);
 
 		setDistantAssignments(
 			assignments
-				.filter((assignment) => assignment.dueDate > fourteenDaysFromNow)
+				.filter((assignment) => {
+					const dueDate = new Date(assignment.due_date);
+					return dueDate > fourteenDaysFromNow;
+				})
 				.sort(sortByDueDate)
 		);
 	}, [assignments]);
+
+	// user ID --> course IDs from Enrollments --> Assignments that match course IDs
 
 	const scrollbarHideStyles = `
     .scrollbar-hide::-webkit-scrollbar {
@@ -161,9 +177,9 @@ export const Assignments = () => {
     }
   `;
 	return (
-		<div className="w-full max-w-full overflow-x-hidden">
+		<div className="w-full overflow-x-hidden">
 			<style>{scrollbarHideStyles}</style>
-			<div className="flex flex-col gap-4 py-6 w-full px-6">
+			<div className="flex flex-col gap-4 p-6 w-full ">
 				<div className="flex gap-2 items-center mb-3">
 					<SidebarTrigger />
 					<h1 className="text-xl font-bold">Assignments</h1>
@@ -194,102 +210,4 @@ export const Assignments = () => {
 	);
 };
 
-function AssignmentSection({
-	title,
-	subtitle,
-	assignments,
-	urgency,
-}: {
-	title: string;
-	subtitle: string;
-	assignments: Assignment[];
-	urgency: UrgencyLevel;
-}) {
-	return (
-		<section className="p-6 rounded-lg border bg-card shadow-sm overflow-hidden max-w-full">
-			<div className="mb-4">
-				<div className="flex items-center gap-2">
-					<Circle
-						size={12}
-						fill={urgencyColors[urgency].bg}
-						color={urgencyColors[urgency].text}
-					/>
-					<h2 className="text-xl font-semibold">{title}</h2>
-				</div>
-				<p className="text-muted-foreground">{subtitle}</p>
-			</div>
-
-			{assignments.length === 0 ? (
-				<p className="text-muted-foreground italic">
-					No assignments in this period
-				</p>
-			) : (
-				<div className="w-full">
-					<div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
-						{assignments.map((assignment) => (
-							<div key={assignment.id} className="flex-none w-[300px]">
-								<AssignmentCard assignment={assignment} />
-							</div>
-						))}
-					</div>
-				</div>
-			)}
-		</section>
-	);
-}
-
-function AssignmentCard({ assignment }: { assignment: Assignment }) {
-	const daysUntilDue = Math.ceil(
-		(assignment.dueDate.getTime() - new Date().getTime()) /
-			(1000 * 60 * 60 * 24)
-	);
-
-	const formatDate = (date: Date) => {
-		return date.toLocaleDateString("en-US", {
-			weekday: "short",
-			month: "short",
-			day: "numeric",
-		});
-	};
-
-	return (
-		<>
-			<Card className="h-full flex flex-col">
-				<CardHeader>
-					<div className="flex justify-between items-start">
-						<CardTitle className="text-lg">{assignment.title}</CardTitle>
-					</div>
-					<CardDescription className="flex items-center gap-1">
-						<BookOpen className="h-4 w-4" />
-						{assignment.course}
-					</CardDescription>
-				</CardHeader>
-				<CardContent className="flex-grow">
-					<p className="text-sm text-muted-foreground">
-						{assignment.description}
-					</p>
-				</CardContent>
-				<CardFooter className="flex flex-col items-start space-y-2 pt-2 border-t">
-					<div className="flex items-center gap-1 text-sm">
-						<CalendarDays className="h-4 w-4 text-muted-foreground" />
-						<span>{formatDate(assignment.dueDate)}</span>
-					</div>
-					<div className="flex items-center gap-1 text-sm">
-						<Clock className="h-4 w-4 text-muted-foreground" />
-						<span>
-							{daysUntilDue === 0 ? (
-								<span className="text-red-500 font-medium">Due today</span>
-							) : daysUntilDue === 1 ? (
-								<span className="text-red-500 font-medium">Due tomorrow</span>
-							) : (
-								<span>
-									Due in <strong>{daysUntilDue}</strong> days
-								</span>
-							)}
-						</span>
-					</div>
-				</CardFooter>
-			</Card>
-		</>
-	);
-}
+//? RLS only allows users to view their own data, so no filtering is needed in our query

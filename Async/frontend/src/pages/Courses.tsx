@@ -5,6 +5,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { allCoursesQueryOptions } from "@/queries/courses";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Courses = () => {
 	const {
@@ -14,7 +15,41 @@ export const Courses = () => {
 		error,
 	} = useQuery(allCoursesQueryOptions());
 
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) {
+		return (
+			<div className="flex flex-col gap-4 pt-6 w-full px-6">
+				<div className="flex justify-between ">
+					<div className="flex gap-2 items-center mb-3">
+						<SidebarTrigger />
+						<h1 className="text-xl font-bold">Courses</h1>
+					</div>
+					<Button variant="default" className="bg-blue-900">
+						Join Course
+					</Button>
+				</div>
+				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+					{/* Generate 6 skeleton cards */}
+					{Array(6)
+						.fill(0)
+						.map((_, index) => (
+							<Card
+								key={index}
+								className="overflow-hidden border border-transparent"
+							>
+								<CardHeader className="bg-muted p-4">
+									<Skeleton className="h-6 w-3/4" />
+								</CardHeader>
+								<CardContent className="p-4 space-y-2">
+									<Skeleton className="h-4 w-full" />
+									<Skeleton className="h-4 w-2/3" />
+									<Skeleton className="h-4 w-5/6" />
+								</CardContent>
+							</Card>
+						))}
+				</div>
+			</div>
+		);
+	}
 
 	if (isError)
 		return (
@@ -40,7 +75,7 @@ export const Courses = () => {
 							params={{ courseId: course.course_id }}
 							key={course.course_id}
 						>
-							<Card className="overflow-hidden transition-shadow hover:shadow-xl border border-transparent hover:border-blue-900">
+							<Card className="overflow-hidden transition-shadow hover:shadow-xl border border-transparent hover:border-muted">
 								<CardHeader className="bg-muted p-4">
 									<CardTitle className="text-lg">{course.name}</CardTitle>
 								</CardHeader>

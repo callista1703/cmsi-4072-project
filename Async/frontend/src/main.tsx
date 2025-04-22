@@ -51,7 +51,7 @@ function InnerApp() {
 	if (auth.loading) {
 		return (
 			<div className="w-screen h-screen flex items-center justify-center">
-				test Loading...
+				Loading...
 			</div>
 		);
 	}

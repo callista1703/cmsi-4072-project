@@ -15,6 +15,7 @@ import {
 	UserPen,
 	ShieldHalf,
 	LogOut,
+	MessageSquareMore,
 } from "lucide-react";
 
 type SidebarMainItemsProps = {
@@ -69,7 +70,7 @@ export const SidebarMainItems = ({ currentPath }: SidebarMainItemsProps) => {
 					<SidebarMenuItem>
 						<SidebarMenuButton asChild isActive={currentPath === "/discussion"}>
 							<Link to="/discussion" className="cursor-pointer">
-								<LogOut />
+								<MessageSquareMore />
 								<span>Discussions</span>
 							</Link>
 						</SidebarMenuButton>

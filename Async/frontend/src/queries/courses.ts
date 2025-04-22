@@ -1,13 +1,9 @@
 import { supabase } from "@/supabaseClient";
 import type { PostgrestError } from "@supabase/supabase-js";
 import type { UseQueryOptions } from "@tanstack/react-query";
-import type { Database } from "types/database.types";
+import type { Database } from "@/types/database.types";
 
 type CourseRow = Database["public"]["Tables"]["Courses"]["Row"];
-type EnrollmentWithCourse = {
-	course_id: string;
-	Courses: CourseRow;
-};
 
 export const courseQueryKey = (courseId: string) =>
 	["courses", courseId] as const;
@@ -40,7 +36,7 @@ export async function fetchEnrolledCourses(): Promise<CourseRow[]> {
 		throw error ?? new Error("Could not load enrolled courses");
 	}
 
-	const enrolledCourses = (data as EnrollmentWithCourse[])
+	const enrolledCourses = data
 		.map((enrollment) => {
 			return enrollment.Courses;
 		})
@@ -62,5 +58,8 @@ export function allCoursesQueryOptions(): UseQueryOptions<CourseRow[]> {
 	return {
 		queryKey: allCoursesQueryKey,
 		queryFn: () => fetchEnrolledCourses(),
+		staleTime: 5,
 	};
 }
+
+//? RLS only allows users to view their own data, so no filtering is needed in our query
