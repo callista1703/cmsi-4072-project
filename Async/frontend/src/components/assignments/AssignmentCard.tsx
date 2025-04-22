@@ -7,7 +7,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { CalendarDays, BookOpen, Clock } from "lucide-react";
-import { AssignmentType } from "@/types/assignment";
+import { AssignmentType } from "@/types/assignmentTypes";
 
 type AssignmentCardProps = {
 	assignment: AssignmentType;
@@ -29,7 +29,7 @@ export function AssignmentCard({ assignment }: AssignmentCardProps) {
 	};
 
 	return (
-		<Card className="min-w-xs inline-flex flex-col box-border h-full hover:shadow-xl border border-transparent hover:border-muted transition-shadow cursor-pointer">
+		<Card className="min-w-xs inline-flex flex-col box-border h-full hover:shadow-lg border border-transparent hover:border-muted transition-shadow cursor-pointer">
 			<CardHeader>
 				<CardTitle className="text-md whitespace-nowrap">
 					{assignment.title}

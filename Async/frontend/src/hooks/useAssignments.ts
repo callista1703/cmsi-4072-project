@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { Assignment } from "@/types/assignment";
+import { AssignmentType } from "@/types/assignmentTypes";
 
-async function fetchAssignments(): Promise<Assignment[]> {
+async function fetchAssignments(): Promise<AssignmentType[]> {
 	// TODO: Replace with actual API call
 	const response = await fetch("/api/assignments");
 	if (!response.ok) {

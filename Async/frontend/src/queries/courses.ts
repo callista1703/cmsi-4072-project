@@ -58,7 +58,6 @@ export function allCoursesQueryOptions(): UseQueryOptions<CourseRow[]> {
 	return {
 		queryKey: allCoursesQueryKey,
 		queryFn: () => fetchEnrolledCourses(),
-		staleTime: 5,
 	};
 }
 

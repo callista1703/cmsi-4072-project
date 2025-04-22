@@ -1,6 +1,6 @@
 import { AssignmentCard } from "./AssignmentCard";
 import { Circle } from "lucide-react";
-import { AssignmentType } from "@/types/assignment";
+import { AssignmentType } from "@/types/assignmentTypes";
 
 type UrgencyLevel = "high" | "medium" | "low";
 
