@@ -1,5 +1,5 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import Calendar from "@/components/Calendar";
+import Calendar from "@/components/calendar/Calendar";
 
 export const CalendarPage = () => {
 	return (

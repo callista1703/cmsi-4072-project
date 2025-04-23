@@ -150,21 +150,6 @@ const DiscussionPage: React.FC = () => {
 						<SidebarTrigger />
 						<h1 className="text-xl font-bold">Discussions</h1>
 					</div>
-					{/* <div className="mb-6">
-						<h2 className="text-2xl font-semibold mb-2">Create a New Topic</h2>
-						<Input
-							placeholder="Topic Title"
-							value={newTopicTitle}
-							onChange={(e) => setNewTopicTitle(e.target.value)}
-							className="mb-2"
-						/>
-						<div className="relative mb-2 p-2 border border-gray-300 rounded">
-							<EditorBar editor={topicEditor} />
-							<EditorContent className="p-1" editor={topicEditor} />
-							<WordCount editor={topicEditor} />
-						</div>
-						<Button onClick={handleAddTopic}>Add Topic</Button>
-					</div> */}
 					<div className="rounded-xl p-4 border bg-card shadow-sm">
 						<h2 className="text-xl font-semibold mb-6">Active Discussions</h2>
 						{topics.length > 0 ? (

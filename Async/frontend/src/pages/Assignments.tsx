@@ -3,9 +3,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AssignmentSection } from "@/components/assignments/AssignmentSection";
 import { AssignmentType } from "@/types/assignmentTypes";
 import { supabase } from "@/supabaseClient";
-import type { PostgrestError } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
-import type { Database } from "@/types/database.types";
 
 export const Assignments = () => {
 	const [soonAssignments, setSoonAssignments] = useState<AssignmentType[]>([]);

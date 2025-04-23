@@ -1,22 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { handleAddEvent, generateCalendarDays } from "@/utils/calendar";
-import { CalendarCard } from "./calendar/CalendarCard";
-import { Event } from "@/types/calendarTypes";
-
-// fetch assignments
-// use assignment due dates to populate calendar
+import { CalendarCard } from "./CalendarCard";
+import { Event, EventPreview } from "@/types/calendarTypes";
+import { useQuery } from "@tanstack/react-query";
+import { assignmentQueryOptions } from "@/queries/assignments";
 
 const Calendar = () => {
 	const [currentMonth, setCurrentMonth] = useState(new Date());
 	const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-	const [events, setEvents] = useState<Event[]>([]);
-	const [newEvent, setNewEvent] = useState({
+	const [newEvent, setNewEvent] = useState<EventPreview>({
 		time: "",
 		title: "",
 		description: "",
 	});
+	const [events, setEvents] = useState<Event[]>([]);
+
+	const { data: assignments = [] } = useQuery(assignmentQueryOptions());
+
+	useEffect(() => {
+		const assignmentEvents: Event[] = assignments.map((a) => ({
+			date: a.due_date.includes("T") ? a.due_date.split("T")[0] : a.due_date,
+			title: a.title ?? "",
+			time: "",
+			description: a.description || "",
+		}));
+		setEvents(assignmentEvents);
+	}, [assignments]);
 
 	const calendarDays = generateCalendarDays(currentMonth);
 
@@ -120,7 +131,7 @@ const Calendar = () => {
 											{event.title}
 										</h3>
 										<div className="text-sm text-gray-600 mb-1">
-											{event.time}
+											{event.date}
 										</div>
 										<p className="text-gray-700">{event.description}</p>
 									</div>
