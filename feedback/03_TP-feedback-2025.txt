@@ -48,3 +48,14 @@ OVERALL ASSESSMENT:
    Subtotal                                        10/10
    ------------------------------------------------------
    Total Percentage:   10/10 = 100% which is an A-plus
+
+OK, you updated to make this a procedure and did a good job with that.  The
+only problem is you don't have enough requirements for your application as I
+noted in your SRS feedback.  However, for this deliverable, you have met the
+requirements!
+
+I like the way you have laid out the steps ~ clear and concise.  One thing
+to keep in mind in future is to specify a bit more detail of what the user
+should see.  For example, in the 'verify start page' step, you say 'both
+buttons function as expected' but what EXACTLY is expected behavior.  That's
+for next time.......  :)
