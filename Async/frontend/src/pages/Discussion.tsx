@@ -34,7 +34,6 @@ interface Topic {
 }
 
 const DiscussionPage: React.FC = () => {
-  // State
   const [topics, setTopics] = useState<Topic[]>([
     {
       id: Date.now(),
@@ -56,10 +55,8 @@ const DiscussionPage: React.FC = () => {
   const [courseFilter, setCourseFilter] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // Fetch courses
   const { data: courses = [] } = useQuery(allCoursesQueryOptions());
 
-  // Editors
   const topicEditor = useEditor({
     extensions: [
       StarterKit,
@@ -70,6 +67,7 @@ const DiscussionPage: React.FC = () => {
     ],
     content: "",
   });
+
   const responseEditor = useEditor({
     extensions: [
       StarterKit,
@@ -82,7 +80,6 @@ const DiscussionPage: React.FC = () => {
     editorProps: { attributes: { class: "min-h-[120px] focus:outline-none" } },
   });
 
-  // Toggle upvote
   const handleUpvote = (topicId: number) => {
     const hasUpvoted = upvoted.includes(topicId);
     setTopics((prev) =>
@@ -106,7 +103,6 @@ const DiscussionPage: React.FC = () => {
     }
   };
 
-  // Add new thread
   const handleAddTopic = () => {
     if (
       newTopicTitle.trim() &&
@@ -132,7 +128,6 @@ const DiscussionPage: React.FC = () => {
     }
   };
 
-  // Add a response
   const handleAddResponse = () => {
     if (
       selectedTopic &&
@@ -157,7 +152,6 @@ const DiscussionPage: React.FC = () => {
     }
   };
 
-  // Filter & search
   const filtered = topics.filter((t) => {
     const matchCourse = !courseFilter || t.courseId === courseFilter;
     const matchSearch = t.title
@@ -166,13 +160,12 @@ const DiscussionPage: React.FC = () => {
     return matchCourse && matchSearch;
   });
 
-  // Sort
   const sorted = [...filtered].sort((a, b) =>
     sortBy === "latest" ? b.id - a.id : b.upvotes - a.upvotes
   );
 
   return (
-    <div className="p-6 w-full max-w-4xl mx-auto">
+    <div className="p-6 w-full">
       {selectedTopic ? (
         <>
           <Button
@@ -183,7 +176,6 @@ const DiscussionPage: React.FC = () => {
             <ArrowLeft /> Back to Topics
           </Button>
 
-          {/* Thread Header */}
           <div className="flex items-center gap-4 mb-4">
             <img
               src={selectedTopic.avatarUrl}
@@ -197,9 +189,7 @@ const DiscussionPage: React.FC = () => {
             <Button
               variant="ghost"
               className={`ml-auto p-1 ${
-                upvoted.includes(selectedTopic.id)
-                  ? "text-blue-600"
-                  : ""
+                upvoted.includes(selectedTopic.id) ? "text-blue-600" : ""
               }`}
               onClick={() => handleUpvote(selectedTopic.id)}
             >
@@ -207,13 +197,11 @@ const DiscussionPage: React.FC = () => {
             </Button>
           </div>
 
-          {/* Content */}
           <div
             className="prose mb-8"
             dangerouslySetInnerHTML={{ __html: selectedTopic.content }}
           />
 
-          {/* Responses */}
           <h2 className="text-2xl font-semibold mb-4">Responses</h2>
           <div className="space-y-4 mb-6">
             {selectedTopic.responses.length > 0 ? (
@@ -242,7 +230,6 @@ const DiscussionPage: React.FC = () => {
             )}
           </div>
 
-          {/* Reply Editor */}
           <div className="mb-4 p-4 border rounded-lg bg-white shadow-sm relative">
             <EditorBar editor={responseEditor} />
             <EditorContent editor={responseEditor} />
@@ -252,7 +239,6 @@ const DiscussionPage: React.FC = () => {
         </>
       ) : (
         <>
-          {/* Controls */}
           <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
             <div className="flex items-center gap-2">
               <SidebarTrigger />
@@ -303,7 +289,6 @@ const DiscussionPage: React.FC = () => {
             </div>
           </div>
 
-          {/* New Thread Form */}
           {showNewThread && (
             <div className="bg-white p-6 rounded-lg shadow mb-8">
               <div className="flex items-center gap-4 mb-4">
@@ -352,7 +337,6 @@ const DiscussionPage: React.FC = () => {
             </div>
           )}
 
-          {/* Discussions List */}
           <div className="rounded-xl p-4 border bg-card shadow-sm">
             <h2 className="text-xl font-semibold mb-6">
               Active Discussions
