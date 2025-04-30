@@ -1,44 +1,40 @@
 import {
 	Card,
-	CardContent,
-	CardFooter,
 	CardHeader,
 	CardDescription,
 	CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
-import { z } from "zod";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { Form } from "./onboarding/Form";
 
 export default function RegisterCard() {
-	const { session, signUpNewUser } = useAuth();
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState("");
+	// const { session, signUpNewUser } = useAuth();
+	// const [firstName, setFirstName] = useState("");
+	// const [lastName, setLastName] = useState("");
+	// const [email, setEmail] = useState("");
+	// const [password, setPassword] = useState("");
+	// const [loading, setLoading] = useState(false);
+	// const [error, setError] = useState("");
 
-	const navigate = useNavigate({ from: "/register" });
+	// const navigate = useNavigate({ from: "/register" });
 
-	const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setLoading(true);
+	// const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+	// 	e.preventDefault();
+	// 	setLoading(true);
 
-		try {
-			const result = await signUpNewUser(email, password);
-			if (result.success) {
-				navigate({ to: "/calendar" });
-			}
-		} catch (error) {
-			setError("an error occurred");
-		} finally {
-			setLoading(false);
-		}
-	};
+	// 	try {
+	// 		const result = await signUpNewUser(email, password);
+	// 		if (result.success) {
+	// 			navigate({ to: "/calendar" });
+	// 		}
+	// 	} catch (error) {
+	// 		setError("an error occurred");
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// };
 
 	return (
 		<>
@@ -47,24 +43,8 @@ export default function RegisterCard() {
 					<CardTitle className="text-2xl">Create Account</CardTitle>
 					<CardDescription>Start learning with Async today!</CardDescription>
 				</CardHeader>
-				<form className="space-y-4" onSubmit={handleSignUp}>
+				{/* <form className="space-y-4" onSubmit={handleSignUp}>
 					<CardContent>
-						{/* <div className="flex flex-col gap-1">
-							<label htmlFor="firstName">First Name</label>
-							<input
-								type="firstName"
-								className=" border rounded-sm border-stone-200 p-2"
-								onChange={(e) => setFirstName(e.target.value)}
-							/>
-						</div>
-						<div className="flex flex-col gap-1">
-							<label htmlFor="lastName">Last Name</label>
-							<input
-								type="lastName"
-								className=" border rounded-sm border-stone-200 p-2"
-								onChange={(e) => setLastName(e.target.value)}
-							/>
-						</div> */}
 						<div className="flex flex-col gap-1">
 							<label htmlFor="email">Email</label>
 							<input
@@ -103,7 +83,8 @@ export default function RegisterCard() {
 						</div>
 						{error && <p className="text-red-500 pt-4 text-center">{error}</p>}
 					</CardFooter>
-				</form>
+				</form> */}
+				<Form />
 			</Card>
 		</>
 	);

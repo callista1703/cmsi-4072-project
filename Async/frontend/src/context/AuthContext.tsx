@@ -12,7 +12,10 @@ export interface AuthState {
 	session: Session | null;
 	signUpNewUser: (
 		email: string,
-		password: string
+		password: string,
+		firstName: string,
+		lastName: string,
+		role: string
 	) => Promise<{ success: boolean; data?: object; error?: Error }>;
 	signOutUser: () => Promise<void>;
 	signInUser: (
@@ -55,10 +58,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		return () => subscription.unsubscribe();
 	}, []);
 
-	const signUpNewUser = async (email: string, password: string) => {
+	const signUpNewUser = async (
+		email: string,
+		password: string,
+		firstName: string,
+		lastName: string,
+		role: string
+	) => {
 		const { data, error } = await supabase.auth.signUp({
 			email: email,
 			password: password,
+			options: {
+				data: {
+					firstName: firstName,
+					lastName: lastName,
+					role: role,
+				},
+			},
 		});
 
 		if (error) {
@@ -69,6 +85,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		setSession(data.session);
 		return { success: true, data };
 	};
+	// const signUpNewUser = async (email: string, password: string) => {
+	// 	const { data, error } = await supabase.auth.signUp({
+	// 		email: email,
+	// 		password: password,
+	// 	});
+
+	// 	if (error) {
+	// 		console.error("Error signing up:", error.message);
+	// 		return { success: false, error };
+	// 	}
+
+	// 	setSession(data.session);
+	// 	return { success: true, data };
+	// };
 
 	const signOutUser = async () => {
 		if (!session) {

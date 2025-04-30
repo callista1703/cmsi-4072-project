@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export function Dashboard() {
 	return (
 		<Card className="w-full">
-			<CardHeader>
+			<CardHeader className="flex gap-2">
 				<CardTitle>Dashboard</CardTitle>
 			</CardHeader>
 			<CardContent>
