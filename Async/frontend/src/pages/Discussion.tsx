@@ -13,13 +13,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { allCoursesQueryOptions } from "@/queries/courses";
-import defaultAvatar from "@/assets/default.png";
+import { useAuth } from "@/context/AuthContext";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface Response {
   id: number;
   content: string;
   authorName: string;
-  avatarUrl: string;
 }
 
 interface Topic {
@@ -28,20 +28,32 @@ interface Topic {
   content: string;
   responses: Response[];
   authorName: string;
-  avatarUrl: string;
   upvotes: number;
   courseId: string;
 }
 
 const DiscussionPage: React.FC = () => {
+  const { session } = useAuth();
+
+  // Pull initials & name from auth metadata
+  const userMetadata = (session?.user.user_metadata ?? {}) as any;
+  const currentUserName =
+    userMetadata.firstName && userMetadata.lastName
+      ? `${userMetadata.firstName} ${userMetadata.lastName}`
+      : "You";
+  const userInitials = currentUserName
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+
   const [topics, setTopics] = useState<Topic[]>([
     {
       id: Date.now(),
       title: "Sample Topic",
       content: "<p>Sample content</p>",
       responses: [],
-      authorName: "Alice",
-      avatarUrl: defaultAvatar,
+      authorName: "Alice Smith",
       upvotes: 0,
       courseId: "",
     },
@@ -81,24 +93,20 @@ const DiscussionPage: React.FC = () => {
   });
 
   const handleUpvote = (topicId: number) => {
-    const hasUpvoted = upvoted.includes(topicId);
-    setTopics((prev) =>
-      prev.map((t) =>
+    const has = upvoted.includes(topicId);
+    setTopics((tpcs) =>
+      tpcs.map((t) =>
         t.id === topicId
-          ? { ...t, upvotes: t.upvotes + (hasUpvoted ? -1 : 1) }
+          ? { ...t, upvotes: t.upvotes + (has ? -1 : 1) }
           : t
       )
     );
-    if (hasUpvoted) {
-      setUpvoted((prev) => prev.filter((id) => id !== topicId));
-    } else {
-      setUpvoted((prev) => [...prev, topicId]);
-    }
+    setUpvoted((u) =>
+      has ? u.filter((id) => id !== topicId) : [...u, topicId]
+    );
     if (selectedTopic?.id === topicId) {
       setSelectedTopic((t) =>
-        t
-          ? { ...t, upvotes: t.upvotes + (hasUpvoted ? -1 : 1) }
-          : t
+        t ? { ...t, upvotes: t.upvotes + (has ? -1 : 1) } : t
       );
     }
   };
@@ -107,23 +115,21 @@ const DiscussionPage: React.FC = () => {
     if (
       newTopicTitle.trim() &&
       newTopicCourseId &&
-      topicEditor &&
-      topicEditor.getHTML().trim() !== "<p></p>"
+      topicEditor!.getHTML().trim() !== "<p></p>"
     ) {
-      const newTopic: Topic = {
+      const t: Topic = {
         id: Date.now(),
         title: newTopicTitle.trim(),
-        content: topicEditor.getHTML(),
+        content: topicEditor!.getHTML(),
         responses: [],
-        authorName: "You",
-        avatarUrl: defaultAvatar,
+        authorName: currentUserName,
         upvotes: 0,
         courseId: newTopicCourseId,
       };
-      setTopics([newTopic, ...topics]);
+      setTopics([t, ...topics]);
       setNewTopicTitle("");
       setNewTopicCourseId("");
-      topicEditor.commands.clearContent();
+      topicEditor!.commands.clearContent();
       setShowNewThread(false);
     }
   };
@@ -131,24 +137,22 @@ const DiscussionPage: React.FC = () => {
   const handleAddResponse = () => {
     if (
       selectedTopic &&
-      responseEditor &&
-      responseEditor.getHTML().trim() !== "<p></p>"
+      responseEditor!.getHTML().trim() !== "<p></p>"
     ) {
-      const newResponse: Response = {
+      const r: Response = {
         id: Date.now(),
-        content: responseEditor.getHTML(),
-        authorName: "You",
-        avatarUrl: defaultAvatar,
+        content: responseEditor!.getHTML(),
+        authorName: currentUserName,
       };
       const updated = {
         ...selectedTopic,
-        responses: [...selectedTopic.responses, newResponse],
+        responses: [...selectedTopic.responses, r],
       };
-      setTopics((prev) =>
-        prev.map((t) => (t.id === selectedTopic.id ? updated : t))
+      setTopics((tpcs) =>
+        tpcs.map((t) => (t.id === selectedTopic.id ? updated : t))
       );
       setSelectedTopic(updated);
-      responseEditor.commands.clearContent();
+      responseEditor!.commands.clearContent();
     }
   };
 
@@ -177,14 +181,20 @@ const DiscussionPage: React.FC = () => {
           </Button>
 
           <div className="flex items-center gap-4 mb-4">
-            <img
-              src={selectedTopic.avatarUrl}
-              alt={selectedTopic.authorName}
-              className="w-16 h-16 rounded-full"
-            />
+            <Avatar className="w-16 h-16">
+              <AvatarFallback>
+                {selectedTopic.authorName
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
             <div>
               <h1 className="text-3xl font-bold">{selectedTopic.title}</h1>
-              <p className="text-gray-600">by {selectedTopic.authorName}</p>
+              <p className="text-gray-600">
+                by {selectedTopic.authorName}
+              </p>
             </div>
             <Button
               variant="ghost"
@@ -210,11 +220,15 @@ const DiscussionPage: React.FC = () => {
                   key={resp.id}
                   className="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm"
                 >
-                  <img
-                    src={resp.avatarUrl}
-                    alt={resp.authorName}
-                    className="w-12 h-12 rounded-full"
-                  />
+                  <Avatar className="w-12 h-12">
+                    <AvatarFallback>
+                      {resp.authorName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <p className="font-semibold text-sm mb-1">
                       {resp.authorName}
@@ -231,9 +245,9 @@ const DiscussionPage: React.FC = () => {
           </div>
 
           <div className="mb-4 p-4 border rounded-lg bg-white shadow-sm relative">
-            <EditorBar editor={responseEditor} />
-            <EditorContent editor={responseEditor} />
-            <WordCount editor={responseEditor} />
+            <EditorBar editor={responseEditor!} />
+            <EditorContent editor={responseEditor!} />
+            <WordCount editor={responseEditor!} />
           </div>
           <Button onClick={handleAddResponse}>Submit Response</Button>
         </>
@@ -292,11 +306,9 @@ const DiscussionPage: React.FC = () => {
           {showNewThread && (
             <div className="bg-white p-6 rounded-lg shadow mb-8">
               <div className="flex items-center gap-4 mb-4">
-                <img
-                  src={defaultAvatar}
-                  alt="You"
-                  className="w-16 h-16 rounded-full"
-                />
+                <Avatar className="w-16 h-16">
+                  <AvatarFallback>{userInitials}</AvatarFallback>
+                </Avatar>
                 <span className="font-semibold">You</span>
               </div>
               <Input
@@ -318,9 +330,9 @@ const DiscussionPage: React.FC = () => {
                 ))}
               </select>
               <div className="border p-2 mb-4 rounded-lg relative">
-                <EditorBar editor={topicEditor} />
-                <EditorContent editor={topicEditor} />
-                <WordCount editor={topicEditor} />
+                <EditorBar editor={topicEditor!} />
+                <EditorContent editor={topicEditor!} />
+                <WordCount editor={topicEditor!} />
               </div>
               <div className="flex justify-end gap-2">
                 <Button variant="ghost" onClick={() => setShowNewThread(false)}>
@@ -338,9 +350,7 @@ const DiscussionPage: React.FC = () => {
           )}
 
           <div className="rounded-xl p-4 border bg-card shadow-sm">
-            <h2 className="text-xl font-semibold mb-6">
-              Active Discussions
-            </h2>
+            <h2 className="text-xl font-semibold mb-6">Active Discussions</h2>
             <div className="space-y-6">
               {sorted.map((topic) => (
                 <div
@@ -348,23 +358,23 @@ const DiscussionPage: React.FC = () => {
                   className="flex gap-6 p-6 bg-white rounded-lg shadow-lg hover:shadow-xl cursor-pointer"
                   onClick={() => setSelectedTopic(topic)}
                 >
-                  <img
-                    src={topic.avatarUrl}
-                    alt={topic.authorName}
-                    className="w-16 h-16 rounded-full flex-shrink-0"
-                  />
+                  <Avatar className="w-16 h-16 flex-shrink-0">
+                    <AvatarFallback>
+                      {topic.authorName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold">
-                        {topic.title}
-                      </h3>
+                      <h3 className="text-xl font-semibold">{topic.title}</h3>
                       <Button
                         variant="ghost"
                         size="sm"
                         className={`p-1 ${
-                          upvoted.includes(topic.id)
-                            ? "text-blue-600"
-                            : ""
+                          upvoted.includes(topic.id) ? "text-blue-600" : ""
                         }`}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -383,9 +393,7 @@ const DiscussionPage: React.FC = () => {
                     />
                     <p className="text-sm text-gray-500">
                       {topic.responses.length}{" "}
-                      {topic.responses.length === 1
-                        ? "reply"
-                        : "replies"}
+                      {topic.responses.length === 1 ? "reply" : "replies"}
                     </p>
                   </div>
                 </div>
